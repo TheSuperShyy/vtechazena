@@ -64,6 +64,7 @@ export default function WhisperReveal() {
     const ctx = gsap.context(() => {
       const els = (Array.from(document.querySelectorAll(SELECTOR)) as HTMLElement[])
         .filter((el) => !el.closest(".hdr")) // leave the fixed header alone
+        .filter((el) => !el.closest(".tier-card")) // cards animate as one unit (below)
         .filter((el) => !el.matches(SKIP))
         .filter((el) => !el.dataset.whispered)
         .filter((el) => (el.textContent ?? "").trim().length > 0);
@@ -102,6 +103,23 @@ export default function WhisperReveal() {
             duration: 1.2,
             ease: "power2.out",
             scrollTrigger: { trigger: el, start: "top 85%", once: true },
+          });
+        }
+      );
+
+      // Services tier cards rise + fade + scale in as they enter (transform is on
+      // the card itself, which is safe for its own position:sticky stacking).
+      (Array.from(document.querySelectorAll(".tier-card")) as HTMLElement[]).forEach(
+        (card) => {
+          if (reduce) return;
+          gsap.set(card, { opacity: 0, y: 64, scale: 0.97 });
+          gsap.to(card, {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.9,
+            ease: "power2.out",
+            scrollTrigger: { trigger: card, start: "top 90%", once: true },
           });
         }
       );

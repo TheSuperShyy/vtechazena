@@ -127,6 +127,21 @@
 .services-lead{color:#b7b3ab;margin-top:1.3rem;font-size:1.12rem;font-weight:300;line-height:1.7}
 .services-dot{width:9px;height:9px;border-radius:50%;background:#fff;margin:2.6rem auto 0}
 
+/* The dark Services section slides up over the pinned Work section as you scroll
+   into it — the entrance for the black panel. Uses sticky + z-index only (no
+   transform), so the cards' own position:sticky stacking keeps working. The gap
+   on Work (margin/padding) stays visible during the dwell before it rises. */
+.stack-reveal{position:relative}
+.stack-reveal > .section--work{position:sticky;top:0;min-height:100vh;z-index:1}
+.stack-reveal > .section--services{position:relative;z-index:2;
+  box-shadow:0 -40px 80px -30px rgba(0,0,0,.6)}
+@media (prefers-reduced-motion:reduce){
+  .stack-reveal > .section--work{position:static;min-height:92vh}
+}
+@media (max-width:680px){
+  .stack-reveal > .section--work{position:static}
+}
+
 /* 3 stacking cards (smooth-scroll stacking effect) */
 .tiers{position:relative;max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:6vh}
 .tier-card{position:sticky;top:3.5rem;height:calc(100vh - 7rem);min-height:520px;border-radius:0;

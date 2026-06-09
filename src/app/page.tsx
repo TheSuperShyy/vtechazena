@@ -13,8 +13,10 @@ export default function Home() {
       <Header />
       <Hero />
       <Intro />
-      <Work />
-      <Process />
+      <div className="stack-reveal">
+        <Work />
+        <Process />
+      </div>
       <Faq />
       <Contact />
       <WhisperReveal />
