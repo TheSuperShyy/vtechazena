@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import { useEffect, useState } from "react";
 import { useLenis } from "lenis/react";
@@ -9,8 +10,8 @@ const LINKS = [
 ];
 
 export default function Header() {
-  const [scrolled, setScrolled] = useState(false);
-  const [hidden, setHidden] = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
+  const [onDark, setOnDark] = useState(true);
   const [open, setOpen] = useState(false);
   const lenis = useLenis();
 
@@ -18,10 +19,20 @@ export default function Header() {
     let last = window.scrollY;
     const onScroll = () => {
       const y = window.scrollY;
-      setScrolled(y > 20);
-      if (y > last && y > 140 && !open) setHidden(true);
-      else setHidden(false);
+      // Scrolling down collapses the bar to the logo; scrolling up (or near the
+      // top, or with the menu open) expands it back out.
+      if (open || y < 90) setCollapsed(false);
+      else if (y > last + 4) setCollapsed(true);
+      else if (y < last - 4) setCollapsed(false);
       last = y;
+      // Dynamic contrast: flip the logo/nav light or dark depending on whether
+      // the bar currently sits over a dark section (hero / services) or a light one.
+      let dark = false;
+      document.querySelectorAll<HTMLElement>(".hero, .section--services").forEach((el) => {
+        const r = el.getBoundingClientRect();
+        if (r.top <= 48 && r.bottom > 48) dark = true;
+      });
+      setOnDark(dark);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
@@ -39,9 +50,11 @@ export default function Header() {
   };
 
   return (
-    <header className={`hdr${scrolled ? " scrolled" : ""}${hidden ? " hide" : ""}`}>
-      <a href="#top" className="hdr__logo" onClick={(e) => goTo(e, "#top")}>
-        ותחזנה<span>STUDIO</span>
+    <header
+      className={`hdr${onDark ? "" : " on-light"}${collapsed ? " collapsed" : ""}${open ? " open" : ""}`}
+    >
+      <a href="#top" className="hdr__logo" onClick={(e) => goTo(e, "#top")} aria-label="ותחזנה">
+        <img src="/logo.png" alt="ותחזנה" />
       </a>
       <nav className={`hdr__nav${open ? " open" : ""}`}>
         {LINKS.map((l) => (
@@ -49,6 +62,13 @@ export default function Header() {
             {l.label}
           </a>
         ))}
+        <a
+          href="#contact"
+          className="hdr__nav-cta btn btn--dark"
+          onClick={(e) => goTo(e, "#contact")}
+        >
+          בואו נדבר
+        </a>
       </nav>
       <a href="#contact" className="hdr__cta" onClick={(e) => goTo(e, "#contact")}>
         בואו נדבר

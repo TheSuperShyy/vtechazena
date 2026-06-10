@@ -1,7 +1,10 @@
+"use client";
+import { useState } from "react";
+
 const QA = [
   {
     q: "כמה עולה ציור קיר?",
-    a: "המחיר נע לפי רמת העבודה (בסיס / מתקדם / פרימיום) ומושפע מגודל הקיר, מורכבות העיצוב וכיתוב. נשמח לתת הצעה אישית בוואטסאפ.",
+    a: "המחיר נע לפי רמת העבודה: בסיסי 1,800 עד 2,500 ₪, מתקדם 3,000 עד 5,500 ₪, ופרימיום החל מ-7,000 ₪. המחיר הסופי מושפע מגודל הקיר ומורכבות העיצוב. נשמח לתת הצעה אישית בוואטסאפ.",
   },
   {
     q: "כמה זמן לוקח?",
@@ -18,6 +21,8 @@ const QA = [
 ];
 
 export default function Faq() {
+  const [open, setOpen] = useState<number | null>(0);
+
   return (
     <section className="section" id="faq">
       <div className="section__head reveal">
@@ -25,12 +30,26 @@ export default function Faq() {
         <h2 className="section__title">כל מה שרציתם לדעת</h2>
       </div>
       <div className="faq">
-        {QA.map((item) => (
-          <details className="reveal" key={item.q}>
-            <summary>{item.q}</summary>
-            <p>{item.a}</p>
-          </details>
-        ))}
+        {QA.map((item, i) => {
+          const isOpen = open === i;
+          return (
+            <div className={`faq__item${isOpen ? " open" : ""}`} key={item.q}>
+              <button
+                className="faq__q"
+                onClick={() => setOpen(isOpen ? null : i)}
+                aria-expanded={isOpen}
+              >
+                <span>{item.q}</span>
+                <span className="faq__icon" aria-hidden="true" />
+              </button>
+              <div className="faq__a">
+                <div className="faq__a-inner">
+                  <p>{item.a}</p>
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </section>
   );
