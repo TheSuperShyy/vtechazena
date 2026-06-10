@@ -2,6 +2,7 @@ import Header from "@/components/site/Header";
 import Hero from "@/components/site/Hero";
 import Intro from "@/components/site/Intro";
 import Work from "@/components/site/Work";
+import Showcase from "@/components/site/Showcase";
 import Process from "@/components/site/Process";
 import Faq from "@/components/site/Faq";
 import Contact from "@/components/site/Contact";
@@ -13,10 +14,9 @@ export default function Home() {
       <Header />
       <Hero />
       <Intro />
-      <div className="stack-reveal">
-        <Work />
-        <Process />
-      </div>
+      <Work />
+      <Showcase />
+      <Process />
       <Faq />
       <Contact />
       <WhisperReveal />
