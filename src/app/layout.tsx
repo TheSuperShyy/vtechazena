@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
-import { Heebo, Frank_Ruhl_Libre, Pinyon_Script } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Assistant, Frank_Ruhl_Libre, Pinyon_Script } from "next/font/google";
 import "./globals.css";
 import "./site.css";
 import SmoothScroll from "@/components/site/SmoothScroll";
+import Cursor from "@/components/site/Cursor";
 
-const heebo = Heebo({
+const assistant = Assistant({
   subsets: ["hebrew", "latin"],
-  weight: ["300", "400", "500", "700", "900"],
+  weight: ["300", "400", "500", "600", "700", "800"],
   variable: "--font-sans",
   display: "swap",
 });
@@ -29,6 +30,12 @@ export const metadata: Metadata = {
     "ותחזנה — סטודיו לציורי קיר ייחודיים בהשראת זכר לחורבן. מותאמים אישית, בכל גודל ובכל סגנון.",
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#0d0d0c",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -36,10 +43,11 @@ export default function RootLayout({
     <html
       lang="he"
       dir="rtl"
-      className={`${heebo.variable} ${frank.variable} ${pinyon.variable}`}
+      className={`${assistant.variable} ${frank.variable} ${pinyon.variable}`}
     >
       <body className="site">
         <SmoothScroll>{children}</SmoothScroll>
+        <Cursor />
       </body>
     </html>
   );

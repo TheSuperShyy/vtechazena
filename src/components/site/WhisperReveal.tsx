@@ -11,7 +11,7 @@ const useIsomorphicLayoutEffect =
 // All the copy that should blur-whisper in. Generic h1–h4 / p cover most titles,
 // leads and paragraphs; the rest are spans that hold their own text.
 const SELECTOR =
-  "h1,h2,h3,h4,p,.eyebrow,.services-eyebrow,.stat__num,.stat__label,.tier-card__tag,.tier-card__meta,.faq summary,.footer__logo,.footer__copy";
+  "h1,h2,h3,h4,p,.eyebrow,.services-eyebrow,.stat__label,.tier-card__tag,.tier-card__meta,.footer__logo,.footer__copy";
 
 // Skip the blended hero wordmark (filter would break its mix-blend), the hero
 // sub-text (kept fixed, no animation) and decor.
@@ -65,6 +65,7 @@ export default function WhisperReveal() {
       const els = (Array.from(document.querySelectorAll(SELECTOR)) as HTMLElement[])
         .filter((el) => !el.closest(".hdr")) // leave the fixed header alone
         .filter((el) => !el.closest(".tier-card")) // cards animate as one unit (below)
+        .filter((el) => !el.closest(".faq")) // FAQ has its own accordion animation
         .filter((el) => !el.matches(SKIP))
         .filter((el) => !el.dataset.whispered)
         .filter((el) => (el.textContent ?? "").trim().length > 0);
@@ -120,6 +121,31 @@ export default function WhisperReveal() {
             duration: 0.9,
             ease: "power2.out",
             scrollTrigger: { trigger: card, start: "top 90%", once: true },
+          });
+        }
+      );
+
+      // Stat numbers count up from 0, keeping their suffix ("100%", "50+", "360°").
+      (Array.from(document.querySelectorAll(".stat__num")) as HTMLElement[]).forEach(
+        (el) => {
+          const m = (el.textContent ?? "").trim().match(/^(\d+)(.*)$/);
+          if (!m) return;
+          const target = parseInt(m[1], 10);
+          const suffix = m[2] ?? "";
+          if (reduce) {
+            el.textContent = `${target}${suffix}`;
+            return;
+          }
+          const counter = { val: 0 };
+          el.textContent = `0${suffix}`;
+          gsap.to(counter, {
+            val: target,
+            duration: 1.6,
+            ease: "power2.out",
+            scrollTrigger: { trigger: el, start: "top 90%", once: true },
+            onUpdate: () => {
+              el.textContent = `${Math.round(counter.val)}${suffix}`;
+            },
           });
         }
       );
