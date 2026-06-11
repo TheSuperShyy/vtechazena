@@ -26,9 +26,12 @@ export default function Header() {
       else if (y < last - 4) setCollapsed(false);
       last = y;
       // Dynamic contrast: flip the logo/nav light or dark depending on whether
-      // the bar currently sits over a dark section (hero / services) or a light one.
+      // the bar currently sits over a dark region or a light one. The dark region
+      // is the hero and the whole .stack-group (pinned dark Showcase + the dark
+      // Services panel that stacks over it) — checked as one block so the bar stays
+      // light the entire way through the stack, not just over .section--services.
       let dark = false;
-      document.querySelectorAll<HTMLElement>(".hero, .section--services").forEach((el) => {
+      document.querySelectorAll<HTMLElement>(".hero, .stack-group, .interlude, .tier-stack").forEach((el) => {
         const r = el.getBoundingClientRect();
         if (r.top <= 48 && r.bottom > 48) dark = true;
       });
