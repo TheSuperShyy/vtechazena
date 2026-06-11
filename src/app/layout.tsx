@@ -8,19 +8,19 @@ import Cursor from "@/components/site/Cursor";
 const assistant = Assistant({
   subsets: ["hebrew", "latin"],
   weight: ["300", "400", "500", "600", "700", "800"],
-  variable: "--font-sans",
+  variable: "--font-assistant",
   display: "swap",
 });
 const frank = Frank_Ruhl_Libre({
   subsets: ["hebrew", "latin"],
   weight: ["400", "500", "700"],
-  variable: "--font-serif",
+  variable: "--font-frank",
   display: "swap",
 });
 const pinyon = Pinyon_Script({
   subsets: ["latin"],
   weight: "400",
-  variable: "--font-script",
+  variable: "--font-pinyon",
   display: "swap",
 });
 

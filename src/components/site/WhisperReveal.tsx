@@ -65,6 +65,13 @@ export default function WhisperReveal() {
       const els = (Array.from(document.querySelectorAll(SELECTOR)) as HTMLElement[])
         .filter((el) => !el.closest(".hdr")) // leave the fixed header alone
         .filter((el) => !el.closest(".tier-card")) // cards animate as one unit (below)
+        // Services text is NOT whisper-revealed: the section's sticky-stacking slide
+        // is its entrance, and the per-word reveal mis-fires once it's a stacked
+        // panel over a pinned element (leaving the text stuck at opacity:0). Keep
+        // it plainly visible.
+        .filter((el) => !el.closest(".section--services"))
+        .filter((el) => !el.closest(".tier-feature")) // has its own tabs/accordion; keep text visible
+        .filter((el) => !el.closest(".pcard")) // photo-stack card text stays static (hover-animated)
         .filter((el) => !el.closest(".faq")) // FAQ has its own accordion animation
         .filter((el) => !el.matches(SKIP))
         .filter((el) => !el.dataset.whispered)
@@ -108,20 +115,32 @@ export default function WhisperReveal() {
         }
       );
 
-      // Services tier cards rise + fade + scale in as they enter (transform is on
-      // the card itself, which is safe for its own position:sticky stacking).
+      // Services tier cards: the card rises + fades in, its background image
+      // settles from a slow zoom, and the panel content (tag → title → price →
+      // desc → meta → button) staggers up — a richer, clearly-felt entrance.
+      // Transforms stay on the card / its own children, safe for position:sticky.
       (Array.from(document.querySelectorAll(".tier-card")) as HTMLElement[]).forEach(
         (card) => {
           if (reduce) return;
-          gsap.set(card, { opacity: 0, y: 64, scale: 0.97 });
-          gsap.to(card, {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.9,
-            ease: "power2.out",
-            scrollTrigger: { trigger: card, start: "top 90%", once: true },
+          const img = card.querySelector(".tier-card__bg") as HTMLElement | null;
+          const kids = Array.from(
+            card.querySelectorAll(".tier-card__panel > *")
+          ) as HTMLElement[];
+
+          gsap.set(card, { opacity: 0, y: 60 });
+          gsap.set(kids, { opacity: 0, y: 24 });
+          if (img) gsap.set(img, { scale: 1.14 });
+
+          const tl = gsap.timeline({
+            scrollTrigger: { trigger: card, start: "top 80%", once: true },
           });
+          tl.to(card, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 0);
+          if (img) tl.to(img, { scale: 1, duration: 1.6, ease: "power2.out" }, 0);
+          tl.to(
+            kids,
+            { opacity: 1, y: 0, duration: 0.55, ease: "power2.out", stagger: 0.09 },
+            0.25
+          );
         }
       );
 

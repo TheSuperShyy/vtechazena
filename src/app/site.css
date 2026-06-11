@@ -2,9 +2,9 @@
 :root{
   --vt-bg:#f7f5f1; --vt-ink:#111110; --vt-muted:#6b6862; --vt-line:#e3ded6;
   --vt-dark:#0d0d0c; --vt-accent:#a9854f;
-  --vt-serif:var(--font-serif),Georgia,serif;
-  --vt-sans:var(--font-sans),system-ui,sans-serif;
-  --vt-script:var(--font-script),cursive;
+  --vt-serif:var(--font-frank),Georgia,serif;
+  --vt-sans:var(--font-assistant),system-ui,sans-serif;
+  --vt-script:var(--font-pinyon),cursive;
 }
 .site *{margin:0;padding:0;box-sizing:border-box}
 .site{font-family:var(--vt-sans);color:var(--vt-ink);background:var(--vt-bg);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:clip}
@@ -149,7 +149,12 @@
 .carousel__next{right:10px}
 
 /* Services section (dark) */
-.section--services{background:var(--vt-dark);color:#f3f1ec;max-width:none;margin:0;padding:7rem 2.5rem}
+/* Sticky-stacking (per the reference: full-height sections that pin and pile up).
+   This black panel sits above the pinned Showcase and slides up to stack over it,
+   with a sharp top edge — the same move as the gray section sliding over the dark
+   one in the reference component. */
+.section--services{position:relative;z-index:1;background:var(--vt-dark);color:#f3f1ec;max-width:none;
+  margin:0;padding:7rem 2.5rem;box-shadow:0 -30px 60px -28px rgba(0,0,0,.6)}
 .section--services .section__head{max-width:780px;margin-inline:auto;margin-bottom:3rem}
 .services-eyebrow{display:inline-flex;align-items:center;gap:.55rem;font-size:.82rem;font-weight:700;
   letter-spacing:.18em;text-transform:uppercase;color:var(--vt-accent);margin-bottom:1.2rem}
@@ -160,13 +165,30 @@
 .services-dot{width:9px;height:9px;border-radius:50%;background:#fff;margin:2.6rem auto 0}
 
 /* Full-bleed image interlude (normal-flow section between Work and Services) */
-.showcase{position:relative;width:100%;height:100vh;height:100svh;min-height:480px;
+/* The Showcase + Services stacking group. Bounds the Showcase's sticky range so it
+   unpins when Services ends (instead of staying pinned over the rest of the page),
+   and isolates the pin in its own stacking context. */
+.stack-group{position:relative;z-index:0;isolation:isolate}
+/* Pinned (sticky top:0) so the sharp-edged Services panel below scrolls up and
+   stacks over it — the section-level sticky-stacking from the reference component. */
+.showcase{position:sticky;top:0;z-index:0;width:100%;height:60vh;height:60svh;min-height:340px;
   overflow:hidden;background:var(--vt-dark)}
 .showcase img{width:100%;height:100%;object-fit:cover;object-position:center}
 .showcase__scrim{position:absolute;inset:0;z-index:1;pointer-events:none;
   background:linear-gradient(180deg,rgba(247,245,241,.22),transparent 16%,transparent 72%,rgba(13,13,12,.6))}
 @media (max-width:680px){
   .showcase{min-height:0}
+}
+
+/* Full-bleed dark image interlude (normal flow) — after the Services section.
+   Top blends into the dark services above; bottom eases into the light series. */
+.interlude{position:relative;width:100%;height:60vh;height:60svh;min-height:340px;
+  overflow:hidden;background:var(--vt-dark)}
+.interlude img{width:100%;height:100%;object-fit:cover;object-position:center}
+.interlude__scrim{position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(13,13,12,.55),transparent 24%,transparent 68%,rgba(247,245,241,.28))}
+@media (max-width:680px){
+  .interlude{min-height:0}
 }
 
 /* 3 stacking cards (smooth-scroll stacking effect) */
@@ -179,10 +201,10 @@
   display:flex;flex-direction:column;justify-content:center;gap:1.1rem;padding:2.8rem;
   box-shadow:0 24px 60px rgba(0,0,0,.28)}
 .tier-card__tag{font-size:.76rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--vt-accent)}
-.tier-card__title{font-family:var(--vt-serif);font-size:clamp(2.2rem,4vw,3.4rem);font-weight:700;line-height:1.04}
+.tier-card__title{font-family:var(--vt-sans);font-size:clamp(2.2rem,4vw,3.4rem);font-weight:800;line-height:1.04;letter-spacing:-.01em}
 .tier-card__desc{color:#5a5750;font-weight:300;font-size:1.04rem;line-height:1.7}
 .tier-card__meta{color:#1a1a18;font-weight:500;font-size:.95rem}
-.tier-card__price{font-family:var(--vt-serif);font-size:1.75rem;font-weight:700;color:var(--vt-ink);text-align:right;letter-spacing:.01em;margin-top:-.3rem}
+.tier-card__price{font-family:var(--vt-sans);font-size:1.75rem;font-weight:800;color:var(--vt-ink);text-align:right;letter-spacing:.01em;margin-top:-.3rem}
 .tier-card__panel .btn{align-self:flex-start;margin-top:.5rem}
 .services-note{position:relative;z-index:1;text-align:center;color:#9a968e;font-size:.92rem;font-weight:300;max-width:620px;margin:3.2rem auto 0;line-height:1.6}
 @media (max-width:760px){
@@ -195,6 +217,228 @@
      otherwise the image collapses/renders at a ragged natural height. */
   .tier-card .tier-card__bg{position:relative;height:240px}
   .tier-card__panel{position:relative;inset:auto;width:auto;border-radius:0;padding:1.8rem 1.5rem;box-shadow:none}
+}
+
+/* Tier Showcase — detailed "series" breakdown after the sticky tier cards.
+   Light section; alternating image-collage / text rows. */
+.tier-showcase__head{max-width:780px;margin:0 auto clamp(3rem,7vw,5rem);text-align:center}
+.tier-showcase__title{font-family:var(--vt-sans);font-weight:800;font-size:clamp(2.2rem,6vw,4.2rem);
+  line-height:1.04;letter-spacing:-.02em;color:var(--vt-ink);margin-top:1rem}
+.tier-showcase__lead{color:var(--vt-muted);margin-top:1.2rem;font-size:1.12rem;font-weight:300;line-height:1.7}
+
+.tier-row{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1.04fr .96fr;
+  gap:clamp(2rem,5vw,4.5rem);align-items:center;padding:clamp(3rem,7vw,5.5rem) 0;border-top:1px solid var(--vt-line)}
+.tier-row:first-of-type{border-top:none;padding-top:0}
+.tier-row--flip .tier-row__media{order:2}
+
+.tier-row__media{display:flex;flex-direction:column;gap:.85rem;min-width:0}
+.tier-row__thumbs{display:flex;gap:.85rem;min-width:0}
+/* `.tier-showcase img` (0,1,1) beats `.site img` (0,1,1) by source order, so
+   height:auto + aspect-ratio control the sizing (no forced height:100%). */
+.tier-showcase img{width:100%;height:auto;display:block;border-radius:14px;object-fit:cover;
+  box-shadow:0 24px 60px -34px rgba(0,0,0,.5)}
+.tier-showcase .tier-row__img--hero{aspect-ratio:4/3}
+.tier-showcase .tier-row__thumbs img{flex:1;aspect-ratio:1/1;min-width:0}
+
+.tier-row__body{display:flex;flex-direction:column;gap:1.15rem;align-items:flex-start}
+.tier-row__tag{display:inline-flex;align-items:center;gap:.5rem;font-size:.8rem;font-weight:700;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--vt-accent)}
+.tier-row__name{font-family:var(--vt-sans);font-weight:800;font-size:clamp(1.9rem,4vw,2.9rem);
+  line-height:1.05;letter-spacing:-.01em;color:var(--vt-ink);display:flex;align-items:baseline;gap:.7rem;flex-wrap:wrap}
+.tier-row__badge{font-size:.7rem;font-weight:700;letter-spacing:.12em;color:var(--vt-accent);
+  border:1px solid var(--vt-accent);border-radius:100px;padding:.22rem .7rem;align-self:center}
+.tier-row__intro{color:#46443f;font-weight:400;font-size:1.08rem;line-height:1.75}
+.tier-row__list{list-style:none;display:flex;flex-direction:column;gap:.7rem;width:100%}
+.tier-row__list li{position:relative;padding-inline-start:1.5rem;color:#5a5750;font-weight:300;
+  font-size:1.02rem;line-height:1.6}
+.tier-row__list li::before{content:"✦";position:absolute;inset-inline-start:0;top:.06em;color:var(--vt-accent);font-size:.82rem}
+.tier-row__outro{color:var(--vt-muted);font-weight:300;font-size:1rem;line-height:1.7}
+.tier-row__cta{margin-top:.6rem}
+
+@media (max-width:820px){
+  .tier-row{grid-template-columns:1fr;gap:1.8rem;padding:clamp(2.6rem,9vw,3.6rem) 0}
+  /* media always on top on mobile, regardless of the desktop flip */
+  .tier-row__media,.tier-row--flip .tier-row__media{order:0}
+  .tier-row__body{order:1}
+}
+
+/* Company story — editorial split: relief photo (left) + narrative (right),
+   prayer pulled out as a gold quote. */
+.story__grid{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:.92fr 1.08fr;
+  gap:clamp(2.5rem,5vw,5rem);align-items:stretch}
+.story__text{display:flex;flex-direction:column;align-items:flex-start;text-align:start;justify-content:center}
+.story__title{font-family:var(--vt-sans);font-weight:800;font-size:clamp(2rem,4.5vw,3.4rem);
+  line-height:1.08;letter-spacing:-.02em;color:var(--vt-ink);margin-top:.8rem}
+.story__lead{color:#46443f;font-size:1.08rem;font-weight:400;line-height:1.8;margin-top:1.4rem}
+.story__quote{font-family:var(--vt-sans);font-weight:600;font-size:clamp(1.3rem,2.5vw,1.75rem);
+  line-height:1.5;color:var(--vt-accent);margin:1.5rem 0;padding-inline-start:1.2rem;
+  border-inline-start:3px solid var(--vt-accent)}
+.story__body{display:flex;flex-direction:column;gap:1.1rem;margin-top:.2rem}
+.story__body p{color:#54514b;font-weight:300;font-size:1.02rem;line-height:1.85}
+.story__close{color:var(--vt-ink);font-weight:500;font-size:1.05rem;line-height:1.65;
+  margin-top:1.6rem;padding-top:1.6rem;border-top:1px solid var(--vt-line);width:100%}
+
+.story__media{position:relative;border-radius:16px;overflow:hidden;min-height:440px;
+  box-shadow:0 40px 90px -48px rgba(0,0,0,.55)}
+.story .story__media img{width:100%;height:100%;object-fit:cover}
+
+@media (max-width:860px){
+  .story__grid{grid-template-columns:1fr;gap:2rem}
+  .story__media{order:-1;min-height:0;aspect-ratio:4/3}
+}
+
+/* Gallery — filterable grid of works by series, with a lightbox */
+.gallery__head{max-width:760px;margin:0 auto clamp(2rem,4vw,3rem);text-align:center}
+.gallery__title{font-family:var(--vt-sans);font-weight:800;font-size:clamp(2.2rem,5.5vw,4rem);
+  line-height:1.04;letter-spacing:-.02em;color:var(--vt-ink);margin-top:.9rem}
+.gallery__lead{color:var(--vt-muted);margin-top:1rem;font-size:1.06rem;font-weight:300;line-height:1.7}
+.gallery__filters{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;margin-bottom:2.2rem}
+.gallery__filter{font-family:inherit;font-size:.92rem;font-weight:600;cursor:pointer;padding:.5rem 1.15rem;
+  border-radius:100px;border:1px solid var(--vt-line);background:#fff;color:#3f3d39;
+  transition:background .25s,color .25s,border-color .25s}
+.gallery__filter:hover{border-color:var(--vt-accent)}
+.gallery__filter.active{background:var(--vt-ink);color:#fff;border-color:var(--vt-ink)}
+
+.gallery__grid{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+/* Filter enter/exit + reflow is handled by framer-motion (layout + AnimatePresence
+   in Gallery.tsx). The button just fills its motion.div grid cell. */
+.gtile{position:relative;display:block;width:100%;aspect-ratio:1/1;overflow:hidden;border-radius:14px;
+  cursor:pointer;border:1px solid var(--vt-line);padding:0;background:#e9e5de;font-family:inherit}
+.gallery .gtile__img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.gtile:hover .gtile__img{transform:scale(1.08)}
+.gtile__overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:.65rem;background:rgba(13,13,12,.55);opacity:0;transition:opacity .3s ease;color:#fff}
+.gtile:hover .gtile__overlay,.gtile:focus-visible .gtile__overlay{opacity:1}
+.gtile__badge{font-size:.82rem;font-weight:600;background:rgba(255,255,255,.16);
+  border:1px solid rgba(255,255,255,.25);border-radius:100px;padding:.3rem .85rem}
+
+.glightbox{position:fixed;inset:0;z-index:9998;display:flex;align-items:center;justify-content:center;
+  background:rgba(8,8,7,.93);padding:clamp(1rem,4vw,3rem);animation:glb-fade .25s ease}
+@keyframes glb-fade{from{opacity:0}to{opacity:1}}
+.glightbox__inner{display:flex;flex-direction:column;align-items:center;gap:1rem;max-width:1100px;max-height:90vh}
+.glightbox .glightbox__img{max-width:100%;max-height:78vh;width:auto;height:auto;object-fit:contain;
+  border-radius:10px;box-shadow:0 30px 80px -30px rgba(0,0,0,.8);animation:glb-fade .3s ease}
+.glightbox__cap{display:flex;align-items:center;gap:1.1rem;flex-wrap:wrap;justify-content:center;color:#eee}
+.glightbox__series{font-weight:700;font-size:1.1rem}
+.glightbox__price{color:#b7b3ab}
+.glightbox__cta{color:var(--vt-accent);font-weight:700;text-decoration:none}
+.glightbox__cta:hover{text-decoration:underline}
+.glightbox__close,.glightbox__nav{position:absolute;z-index:2;display:grid;place-items:center;cursor:pointer;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;border-radius:50%;
+  width:46px;height:46px;transition:background .25s ease}
+.glightbox__close:hover,.glightbox__nav:hover{background:rgba(255,255,255,.18)}
+.glightbox__close{top:1.4rem;inset-inline-end:1.4rem}
+.glightbox__nav{top:50%;transform:translateY(-50%)}
+.glightbox__nav--prev{inset-inline-end:1.4rem}
+.glightbox__nav--next{inset-inline-start:1.4rem}
+.g-ic{width:22px;height:22px}
+.gtile__overlay .g-ic{width:30px;height:30px}
+
+@media (max-width:860px){
+  .gallery__grid{grid-template-columns:repeat(2,1fr);gap:.7rem}
+  .glightbox__nav{width:40px;height:40px}
+  .glightbox__nav--prev{inset-inline-end:.5rem}
+  .glightbox__nav--next{inset-inline-start:.5rem}
+}
+
+/* Tier Stack — photo-stack cards, matching the reference: dark, overlapping
+   cards with the middle raised by default (click another to raise it); framed
+   landscape photos peek from the bottom and fan out on hover. */
+.tier-stack{background:var(--vt-dark);color:#f3f1ec;max-width:none;margin:0;padding:clamp(4rem,9vw,7rem) 2.5rem}
+.tier-stack__head{max-width:760px;margin:0 auto clamp(2.6rem,5vw,4.5rem);text-align:center}
+.tier-stack__title{font-family:var(--vt-sans);font-weight:800;font-size:clamp(2.2rem,5.5vw,4rem);
+  line-height:1.04;letter-spacing:-.02em;color:#fff;margin-top:.9rem}
+.tier-stack__lead{color:#b7b3ab;margin-top:1.1rem;font-size:1.08rem;font-weight:300;line-height:1.7}
+
+.tier-stack__row{display:flex;justify-content:center;align-items:flex-start;padding-bottom:1.5rem}
+.pcard{position:relative;flex:0 0 auto;width:300px;height:300px;margin-inline:-34px;border-radius:16px;
+  background:#1a1a17;border:1px solid rgba(255,255,255,.07);box-shadow:0 30px 60px -30px rgba(0,0,0,.8);
+  padding:1.7rem;cursor:pointer;z-index:1;
+  transition:transform .45s cubic-bezier(.2,.8,.2,1),box-shadow .45s ease}
+.pcard.active{z-index:4;transform:translateY(-16px) scale(1.04);box-shadow:0 55px 90px -34px rgba(0,0,0,.85)}
+.pcard:hover{z-index:6;transform:translateY(-12px) scale(1.03)}
+.pcard__text{position:relative;z-index:3}
+.pcard__cat{font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#9a968e}
+.pcard__title{font-family:var(--vt-sans);font-weight:800;font-size:1.9rem;line-height:1.05;margin-top:.45rem;
+  color:#fff;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.pcard__sub{display:block;margin-top:.45rem;font-size:.85rem;color:#9a968e}
+.pcard__cta{display:inline-block;margin-top:.75rem;font-size:.82rem;font-weight:700;color:var(--vt-accent);
+  position:relative;z-index:4;text-decoration:none}
+.pcard__cta:hover{text-decoration:underline}
+
+.pcard__stack{position:absolute;bottom:0;left:0;right:0;height:150px;z-index:1;pointer-events:none}
+.pcard__stack img{position:absolute;bottom:-14px;left:50%;margin-inline-start:-105px;width:210px;height:140px;
+  object-fit:cover;border-radius:10px;border:5px solid #1a1a17;box-shadow:0 14px 30px -10px rgba(0,0,0,.7);
+  transform-origin:bottom center;transition:transform .5s cubic-bezier(.2,.85,.25,1)}
+.pcard__stack img:nth-child(1){transform:rotate(-4deg);z-index:1;transition-delay:.06s}
+.pcard__stack img:nth-child(2){transform:rotate(0deg);z-index:2;transition-delay:.03s}
+.pcard__stack img:nth-child(3){transform:rotate(4deg);z-index:1}
+.pcard:hover .pcard__stack img:nth-child(1){transform:translate(46px,-12px) rotate(-13deg) scale(1.04);z-index:2}
+.pcard:hover .pcard__stack img:nth-child(2){transform:translateY(-18px) scale(1.05);z-index:3}
+.pcard:hover .pcard__stack img:nth-child(3){transform:translate(-46px,-12px) rotate(13deg) scale(1.04);z-index:2}
+
+@media (hover:none){ /* touch: show the fan by default */
+  .pcard__stack img:nth-child(1){transform:translate(42px,-10px) rotate(-12deg)}
+  .pcard__stack img:nth-child(2){transform:translateY(-16px)}
+  .pcard__stack img:nth-child(3){transform:translate(-42px,-10px) rotate(12deg)}
+}
+@media (max-width:860px){
+  .tier-stack__row{flex-direction:column;align-items:center;gap:1.4rem;padding-bottom:0}
+  .pcard{margin-inline:0;width:min(92vw,340px)}
+  .pcard.active,.pcard:hover{transform:none}
+}
+
+/* Tier Feature — FeatureShowcase layout: left copy + linked accordion + CTA,
+   right tabbed image panel. Tabs and accordion share one active series. */
+.tier-feature{padding-top:clamp(3.5rem,8vw,6rem);padding-bottom:clamp(3.5rem,8vw,6rem)}
+.tier-feature__grid{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;
+  gap:clamp(2rem,5vw,4rem);align-items:stretch}
+.tier-feature__left{display:flex;flex-direction:column;align-items:flex-start;gap:1.25rem}
+.tier-feature__title{font-family:var(--vt-sans);font-weight:800;font-size:clamp(2.2rem,5.5vw,4rem);
+  line-height:1.02;letter-spacing:-.02em;color:var(--vt-ink)}
+.tier-feature__desc{color:var(--vt-muted);font-size:1.08rem;font-weight:300;line-height:1.7;max-width:46ch}
+.tier-feature__stats{display:flex;flex-wrap:wrap;gap:.5rem}
+.tier-feature__chip{font-size:.82rem;font-weight:600;color:#3f3d39;background:#ece8e1;
+  border:1px solid var(--vt-line);border-radius:100px;padding:.4rem .9rem}
+
+.tier-feature__acc{width:100%;display:flex;flex-direction:column;margin-top:.3rem}
+.tf-item{border-top:1px solid var(--vt-line)}
+.tf-item:last-child{border-bottom:1px solid var(--vt-line)}
+.tf-item__head{width:100%;display:flex;align-items:center;gap:.8rem;background:none;border:none;
+  cursor:pointer;font-family:inherit;text-align:right;color:var(--vt-ink);padding:1.1rem .2rem}
+.tf-item__title{font-weight:700;font-size:1.12rem;display:flex;align-items:center;gap:.6rem;flex:1}
+.tf-item__price{font-size:.9rem;font-weight:600;color:var(--vt-accent);white-space:nowrap}
+.tf-item__chev{width:18px;height:18px;flex-shrink:0;color:var(--vt-muted);transition:transform .3s}
+.tf-item.open .tf-item__chev{transform:rotate(180deg)}
+.tf-item__panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s ease}
+.tf-item.open .tf-item__panel{grid-template-rows:1fr}
+.tf-item__panelInner{overflow:hidden;min-height:0;padding-bottom:1.2rem;display:flex;flex-direction:column;gap:.9rem}
+.tf-item__intro{color:#46443f;font-weight:400;font-size:1rem;line-height:1.7}
+.tier-feature__cta{margin-top:1.3rem}
+
+/* height:100% makes the image card fill the row, so it matches the text column's
+   height (top-anchored via the grid's align-items:stretch) — no re-centering jump
+   when the accordion opens/closes. min-height keeps it from looking squat. */
+.tier-feature__card{position:relative;width:100%;height:100%;min-height:480px;border-radius:18px;
+  overflow:hidden;border:1px solid var(--vt-line);box-shadow:0 40px 90px -45px rgba(0,0,0,.5);background:#0b0b0a}
+.tier-feature .tier-feature__media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  opacity:0;transition:opacity .55s ease}
+.tier-feature .tier-feature__media.active{opacity:1}
+.tier-feature__tabs{position:absolute;z-index:2;inset-inline:0;bottom:1rem;display:flex;justify-content:center}
+.tier-feature__tablist{display:flex;gap:.3rem;background:rgba(255,255,255,.8);backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.55);border-radius:14px;padding:.32rem;box-shadow:0 10px 30px -12px rgba(0,0,0,.4)}
+.tier-feature__tab{font-family:inherit;font-size:.92rem;font-weight:600;color:#2a2825;background:none;
+  border:none;cursor:pointer;border-radius:10px;padding:.5rem 1.15rem;transition:background .25s,color .25s}
+.tier-feature__tab.active{background:var(--vt-ink);color:#fff}
+.tier-feature__dots{position:absolute;z-index:2;top:1rem;inset-inline-start:1rem;display:flex;gap:.45rem}
+.tier-feature__dot{width:7px;height:7px;padding:0;border:none;border-radius:50%;cursor:pointer;
+  background:rgba(255,255,255,.5);box-shadow:0 1px 3px rgba(0,0,0,.4);transition:background .25s,transform .25s}
+.tier-feature__dot.active{background:#fff;transform:scale(1.3)}
+
+@media (max-width:860px){
+  .tier-feature__grid{grid-template-columns:1fr;gap:1.8rem}
+  .tier-feature__right{order:-1}
+  .tier-feature__card{height:clamp(340px,58vw,470px);min-height:0}
 }
 
 /* FAQ — accordion */

@@ -17,7 +17,6 @@ export default function Contact() {
         <span className="footer__logo">ותחזנה</span>
         <div className="footer__links">
           <a href="#">Instagram</a>
-          <a href="#">TikTok</a>
           <a href="https://wa.me/972500000000">WhatsApp</a>
         </div>
         <span className="footer__copy">© ותחזנה — כל הזכויות שמורות</span>
