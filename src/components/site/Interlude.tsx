@@ -10,7 +10,7 @@ export default function Interlude({
   alt?: string;
 }) {
   return (
-    <section className="interlude" aria-label="גלריה">
+    <section className="interlude" aria-label="גלריה" data-dark>
       <img src={src} alt={alt} loading="lazy" />
       <span className="interlude__scrim" aria-hidden="true" />
     </section>
