@@ -72,6 +72,7 @@ export default function WhisperReveal() {
         .filter((el) => !el.closest(".section--services"))
         .filter((el) => !el.closest(".tier-feature")) // has its own tabs/accordion; keep text visible
         .filter((el) => !el.closest(".pcard")) // photo-stack card text stays static (hover-animated)
+        .filter((el) => !el.closest(".testimonials")) // has its own carousel; keep heading visible
         .filter((el) => !el.closest(".faq")) // FAQ has its own accordion animation
         .filter((el) => !el.matches(SKIP))
         .filter((el) => !el.dataset.whispered)

@@ -4,7 +4,7 @@ const WA =
 
 export default function Hero() {
   return (
-    <section className="hero" id="top">
+    <section className="hero" id="top" data-dark>
       <div className="hero__media">
         {/* Swap this <img> for a <video autoPlay muted loop playsInline> when you have a clip */}
         <img src="/work/IMG_5547.jpg" alt="" />

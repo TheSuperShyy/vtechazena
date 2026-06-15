@@ -4,7 +4,7 @@
 // and stacks over it (sharp top edge). Swap the src for any photo in /public/work.
 export default function Showcase() {
   return (
-    <section className="showcase" aria-label="היצירה בחלל">
+    <section className="showcase" aria-label="היצירה בחלל" data-dark>
       <img src="/work/IMG_4639.jpg" alt="ציור קיר בהתאמה אישית, מותקן בחלל" loading="lazy" />
       <span className="showcase__scrim" aria-hidden="true" />
     </section>

@@ -30,7 +30,7 @@ const TIERS = [
 
 export default function Process() {
   return (
-    <section className="section section--services" id="process">
+    <section className="section section--services" id="process" data-dark>
       <div className="section__head reveal">
         <span className="services-eyebrow">מה אנחנו עושים</span>
         <h2 className="services-title">השירותים שלנו</h2>
