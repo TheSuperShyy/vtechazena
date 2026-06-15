@@ -5,7 +5,7 @@
 // full-size in a lightbox. Cropped set from /cropped-feedback.
 // Note 1.jpg shows a location map, 2.jpg a payment link, 7/8.jpg the iOS menu —
 // included per the owner's choice. `alt` carries the transcribed quote.
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
 
@@ -28,20 +28,24 @@ export default function Testimonials() {
     typeof window !== "undefined" &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  const [emblaRef, emblaApi] = useEmblaCarousel(
+  const [emblaRef] = useEmblaCarousel(
     { loop: true, dragFree: true, align: "start", direction: "rtl", containScroll: false },
     prefersReduced
       ? []
       : [AutoScroll({ playOnInit: true, speed: 1, stopOnInteraction: false, stopOnMouseEnter: true })]
   );
 
-  // Open the lightbox only on a real click, not at the end of a drag.
-  const handleClick = useCallback(
-    (src: string) => {
-      if (!emblaApi || emblaApi.clickAllowed()) setOpen(src);
-    },
-    [emblaApi]
-  );
+  // Open the lightbox only on a real click, not at the end of a drag — measure the
+  // pointer travel between press and release (version-proof; no Embla click API).
+  const down = useRef<{ x: number; y: number } | null>(null);
+  const onPointerDown = useCallback((e: React.PointerEvent) => {
+    down.current = { x: e.clientX, y: e.clientY };
+  }, []);
+  const handleClick = useCallback((src: string, e: React.MouseEvent) => {
+    const d = down.current;
+    if (d && Math.hypot(e.clientX - d.x, e.clientY - d.y) > 8) return; // dragged
+    setOpen(src);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -70,7 +74,8 @@ export default function Testimonials() {
                 <button
                   type="button"
                   className="marquee__btn"
-                  onClick={() => handleClick(s.src)}
+                  onPointerDown={onPointerDown}
+                  onClick={(e) => handleClick(s.src, e)}
                   aria-label="הגדלת ההמלצה"
                 >
                   <img
