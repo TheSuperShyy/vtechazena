@@ -11,7 +11,7 @@ import { WA } from "./Hero";
 
 const SERIES = [
   { key: "יסוד", price: "1,800–2,500 ₪", dir: "tiers/base", images: ["1.png", "2.png", "3.png", "4.png", "7.png"] },
-  { key: "הדר", price: "3,000–5,500 ₪", dir: "tiers/advance", images: ["a-1.png", "a-2.png", "a-3.png"] },
+  { key: "הדר", price: "3,500–6,500 ₪", dir: "tiers/advance", images: ["a-1.png", "a-2.png", "a-3.png"] },
   { key: "תפארת", price: "7,000 ₪ ומעלה", dir: "tiers/premium", images: ["p1.png", "p2.png", "p3.png", "p4.png", "p5.png"] },
 ];
 
@@ -61,8 +61,8 @@ export default function Gallery() {
     if (selected === null) return;
     const onKey = (e: globalThis.KeyboardEvent) => {
       if (e.key === "Escape") setSelected(null);
-      else if (e.key === "ArrowLeft") step(-1);
-      else if (e.key === "ArrowRight") step(1);
+      else if (e.key === "ArrowRight") step(-1); // RTL: Right = previous
+      else if (e.key === "ArrowLeft") step(1); //  RTL: Left = next
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -79,8 +79,8 @@ export default function Gallery() {
     <section className="section gallery" id="series" aria-labelledby="gallery-heading">
       <div className="gallery__head">
         <span className="services-eyebrow">גלריה</span>
-        <h2 id="gallery-heading" className="gallery__title">העבודות שלנו</h2>
-        <p className="gallery__lead">עיינו בעבודות לפי סדרה — לחצו על תמונה להגדלה.</p>
+        <h2 id="gallery-heading" className="gallery__title">העיצובים שלנו</h2>
+        <p className="gallery__lead">עיינו ביצירות לפי הסדרה, ולחצו על התמונה להגדלה.</p>
       </div>
 
       <div className="gallery__filters" role="group" aria-label="קטגוריות">
@@ -112,7 +112,7 @@ export default function Gallery() {
                 className="gtile"
                 onClick={() => setSelected(it.id)}
                 onKeyDown={(e) => onTileKey(e, it.id)}
-                aria-label={`הגדלת תמונה — סדרת ${it.cat}`}
+                aria-label={`הגדלת תמונה, סדרת ${it.cat}`}
               >
                 <img className="gtile__img" src={it.url} alt={`סדרת ${it.cat}`} loading="lazy" decoding="async" />
                 <span className="gtile__overlay" aria-hidden="true">
@@ -138,7 +138,7 @@ export default function Gallery() {
               step(-1);
             }}
           >
-            <ChevL />
+            <ChevR />
           </button>
           <button
             className="glightbox__nav glightbox__nav--next"
@@ -148,7 +148,7 @@ export default function Gallery() {
               step(1);
             }}
           >
-            <ChevR />
+            <ChevL />
           </button>
           <figure className="glightbox__inner" onClick={(e) => e.stopPropagation()}>
             <img className="glightbox__img" src={selectedItem.url} alt={`סדרת ${selectedItem.cat}`} />

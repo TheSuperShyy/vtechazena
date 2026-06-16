@@ -3,8 +3,8 @@ export default function Intro() {
   return (
     <section className="intro" id="intro">
       <h2 className="intro__heading reveal">
-        <span className="intro__sans">ברוכים הבאים אל</span>
-        <span className="intro__script">V&apos;Techazena</span>
+        <span className="intro__sans">ברוכים הבאים ל</span>
+        <span className="intro__script">ותחזינה</span>
       </h2>
 
       <div className="intro__grid">
@@ -21,8 +21,8 @@ export default function Intro() {
                 אמנות שמספרת <em>סיפור</em>
               </h3>
               <p>
-                אנחנו לא רק מציירים קיר — אנחנו יוצרים יצירה שמכניסה משמעות, עומק
-                ויופי לכל חלל. כל עבודה נושאת את רוח זכר לחורבן, בהתאמה אישית למקום
+                אנחנו לא רק חוצבים בקיר, אנחנו מכניסים משמעות, עומק ויופי לחלל
+                הבית. כל עבודה נושאת את הכמיהה לבניין המקדש, בהתאמה אישית למקום
                 ולסיפור שלכם.
               </p>
             </div>
@@ -39,7 +39,7 @@ export default function Intro() {
               <h3>איכות לפני כמות</h3>
               <p>
                 כדי לשמור על רמה גבוהה, אנחנו מקבלים מספר מצומצם של פרויקטים בכל
-                פעם — וכל לקוח מקבל את מלוא תשומת הלב.
+                פעם, וכל לקוח מקבל את מלוא תשומת הלב.
               </p>
             </div>
           </div>
@@ -55,7 +55,7 @@ export default function Intro() {
                 התאמה אישית <em>מלאה</em>
               </h3>
               <p>
-                מהרעיון ועד הגימור — אתם שותפים מלאים בתהליך. גודל, נושא, כיתוב
+                מהרעיון ועד הגימור, אתם שותפים מלאים בתהליך. גודל, נושא, כיתוב
                 וסגנון, הכול נבנה סביבכם.
               </p>
             </div>
@@ -63,7 +63,7 @@ export default function Intro() {
         </div>
 
         <div className="intro__media reveal">
-          <img loading="lazy" src="/work/IMG_3125.jpg" alt="" />
+          <img loading="lazy" src="/work/IMG_4101.jpg" alt="יצירת קיר חצובה בהשראת ירושלים" />
         </div>
       </div>
 
