@@ -7,7 +7,15 @@
   --vt-script:var(--font-pinyon),cursive;
 }
 .site *{margin:0;padding:0;box-sizing:border-box}
-.site{font-family:var(--vt-sans);color:var(--vt-ink);background:var(--vt-bg);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:clip}
+.site{font-family:var(--vt-sans);color:var(--vt-ink);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:clip;
+  /* Subtle site-wide stone/paper texture (warm brand tones) behind transparent
+     sections; opaque sections paint over it. Fixed so it stays put while scrolling. */
+  background-color:var(--vt-bg);
+  background-image:
+    radial-gradient(circle at 18% 12%, rgba(169,133,79,.055), transparent 42%),
+    radial-gradient(circle at 88% 82%, rgba(169,133,79,.05), transparent 48%),
+    repeating-linear-gradient(45deg, rgba(17,17,16,.013) 0 1px, transparent 1px 7px);
+  background-attachment:fixed}
 .site img{display:block;width:100%;height:100%;object-fit:cover}
 .site a{text-decoration:none}
 .site a:not(.btn){color:inherit}
@@ -78,7 +86,7 @@
 .hero__media img,.hero__media video{width:100%;height:100%;object-fit:cover}
 .hero__scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.45),rgba(0,0,0,.2) 35%,rgba(0,0,0,.65))}
 .hero__display{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;padding-bottom:14vh;
-  font-family:var(--vt-script);font-weight:400;font-size:clamp(4rem,16vw,16rem);line-height:1;white-space:nowrap;
+  font-family:var(--vt-serif);font-weight:500;font-size:clamp(4rem,16vw,16rem);line-height:1;white-space:nowrap;
   color:#e8c98c;mix-blend-mode:difference;pointer-events:none;letter-spacing:.01em;
   -webkit-mask-image:linear-gradient(105deg,#000 0%,#000 40%,transparent 58%,transparent 100%);
   mask-image:linear-gradient(105deg,#000 0%,#000 40%,transparent 58%,transparent 100%);
@@ -112,7 +120,7 @@
 .intro{max-width:1200px;margin:0 auto;padding:7rem 2.5rem 4rem}
 .intro__heading{display:flex;flex-direction:column;line-height:.95;margin-bottom:4rem}
 .intro__sans{font-family:var(--vt-sans);font-weight:700;font-size:clamp(2.4rem,7vw,5.5rem);color:#c9c6c0;letter-spacing:-.01em}
-.intro__script{font-family:var(--vt-script);font-weight:400;font-size:clamp(3rem,11vw,9rem);color:var(--vt-ink);margin-top:-.15em}
+.intro__script{font-family:var(--vt-serif);font-weight:500;font-size:clamp(3rem,11vw,9rem);color:var(--vt-ink);margin-top:-.15em}
 .intro__grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:stretch}
 .intro__col{display:flex;flex-direction:column;gap:2.6rem}
 .feature{display:flex;gap:1.2rem;align-items:flex-start}
@@ -151,10 +159,11 @@
   box-shadow:0 26px 54px rgba(0,0,0,.26);transition:transform .65s cubic-bezier(.4,0,.2,1),opacity .55s;will-change:transform;backface-visibility:hidden}
 .cslide img{width:100%;height:100%;object-fit:cover}
 .carousel__nav{position:absolute;top:50%;transform:translateY(-50%);z-index:30;width:48px;height:48px;border-radius:50%;border:none;cursor:pointer;
-  background:rgba(20,20,20,.6);color:#fff;font-size:1.5rem;line-height:1;display:grid;place-items:center;transition:background .3s;backdrop-filter:blur(4px);direction:ltr}
+  background:rgba(20,20,20,.6);color:#fff;font-size:1.5rem;line-height:1;display:grid;place-items:center;transition:background .3s;backdrop-filter:blur(4px)}
 .carousel__nav:hover{background:rgba(20,20,20,.85)}
-.carousel__prev{left:10px}
-.carousel__next{right:10px}
+/* RTL: previous on the right, next on the left */
+.carousel__prev{right:10px;left:auto}
+.carousel__next{left:10px;right:auto}
 
 /* Services section (dark) */
 /* Sticky-stacking (per the reference: full-height sections that pin and pile up).
@@ -337,16 +346,17 @@
 .glightbox__close:hover,.glightbox__nav:hover{background:rgba(255,255,255,.18)}
 .glightbox__close{top:1.4rem;inset-inline-end:1.4rem}
 .glightbox__nav{top:50%;transform:translateY(-50%)}
-.glightbox__nav--prev{inset-inline-end:1.4rem}
-.glightbox__nav--next{inset-inline-start:1.4rem}
+/* RTL: previous on the right (inline-start), next on the left (inline-end) */
+.glightbox__nav--prev{inset-inline-start:1.4rem}
+.glightbox__nav--next{inset-inline-end:1.4rem}
 .g-ic{width:22px;height:22px}
 .gtile__overlay .g-ic{width:30px;height:30px}
 
 @media (max-width:860px){
   .gallery__grid{grid-template-columns:repeat(2,1fr);gap:.7rem}
   .glightbox__nav{width:40px;height:40px}
-  .glightbox__nav--prev{inset-inline-end:.5rem}
-  .glightbox__nav--next{inset-inline-start:.5rem}
+  .glightbox__nav--prev{inset-inline-start:.5rem}
+  .glightbox__nav--next{inset-inline-end:.5rem}
 }
 
 /* Tier Stack — photo-stack cards, matching the reference: dark, overlapping
@@ -486,11 +496,47 @@
 .workshop-page__title{font-family:var(--vt-sans);font-weight:800;font-size:clamp(2.2rem,6vw,4rem);
   line-height:1.04;letter-spacing:-.02em;color:var(--vt-ink);margin-top:.8rem}
 .workshop-page__lead{color:var(--vt-muted);margin-top:1rem;font-size:1.08rem;font-weight:300;line-height:1.7}
+.workshop-page__body{color:var(--vt-muted);margin-top:1rem;font-size:1rem;font-weight:300;line-height:1.8;max-width:60ch;margin-inline:auto}
 .workshop-page__grid{display:grid;gap:1.2rem;grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
 .workshop-page__item{border-radius:14px;overflow:hidden;border:1px solid var(--vt-line);aspect-ratio:4/3;
   box-shadow:0 24px 55px -40px rgba(0,0,0,.5)}
 .workshop-page .workshop-page__item img{width:100%;height:100%;object-fit:cover;display:block}
 @media (max-width:640px){.workshop-page__grid{grid-template-columns:1fr}}
+
+/* Contact page (/contact) */
+.contact-page{max-width:1000px;margin:0 auto;padding:clamp(6.5rem,11vw,8.5rem) 2.5rem 6rem;text-align:center}
+.contact-page__head{max-width:640px;margin:0 auto clamp(2.2rem,5vw,3.4rem)}
+.contact-page__title{font-family:var(--vt-sans);font-weight:800;font-size:clamp(2.2rem,6vw,4rem);
+  line-height:1.04;letter-spacing:-.02em;color:var(--vt-ink);margin-top:.8rem}
+.contact-page__lead{color:var(--vt-muted);margin-top:1rem;font-size:1.08rem;font-weight:300;line-height:1.7}
+.contact-grid{display:grid;gap:1.1rem;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));text-align:right}
+.contact-card{display:flex;flex-direction:column;gap:.45rem;padding:1.6rem 1.5rem;background:#fff;border:1px solid var(--vt-line);
+  border-radius:16px;box-shadow:0 24px 55px -45px rgba(0,0,0,.5);transition:border-color .25s,transform .25s}
+.contact-card:hover{border-color:var(--vt-accent);transform:translateY(-3px)}
+.contact-card__label{font-weight:700;font-size:1.1rem;color:var(--vt-ink)}
+.contact-card__value{color:var(--vt-muted);font-size:.98rem}
+.contact-card__cta{margin-top:.4rem;color:var(--vt-accent);font-weight:700;font-size:.92rem}
+.contact-page__primary{margin-top:2.4rem}
+
+/* Lead-capture popup */
+.lead{position:fixed;inset:0;z-index:200;background:rgba(13,13,12,.6);backdrop-filter:blur(4px);
+  display:grid;place-items:center;padding:1.5rem;animation:lead-fade .25s ease}
+@keyframes lead-fade{from{opacity:0}to{opacity:1}}
+.lead__panel{position:relative;width:min(440px,100%);background:var(--vt-bg);border:1px solid var(--vt-line);
+  border-radius:20px;padding:clamp(1.8rem,5vw,2.6rem);text-align:center;box-shadow:0 40px 90px -40px rgba(0,0,0,.6)}
+.lead__close{position:absolute;top:.9rem;left:.9rem;width:34px;height:34px;display:grid;place-items:center;
+  background:none;border:none;color:var(--vt-muted);cursor:pointer;border-radius:50%;transition:.2s}
+.lead__close:hover{background:rgba(0,0,0,.06);color:var(--vt-ink)}
+.lead__close svg{width:20px;height:20px}
+.lead__title{font-family:var(--vt-sans);font-weight:800;font-size:clamp(1.4rem,4vw,1.8rem);margin-top:.7rem;color:var(--vt-ink)}
+.lead__lead{color:var(--vt-muted);margin-top:.6rem;font-size:1rem;font-weight:300;line-height:1.6}
+.lead__form{display:flex;flex-direction:column;gap:.7rem;margin-top:1.4rem}
+.lead__input{padding:.85rem 1rem;border:1px solid var(--vt-line);border-radius:12px;background:#fff;
+  font-family:inherit;font-size:1rem;color:var(--vt-ink)}
+.lead__input:focus{outline:none;border-color:var(--vt-accent)}
+.lead__submit{margin-top:.3rem;border:none;cursor:pointer;font-family:inherit}
+.lead__submit:disabled{opacity:.6;cursor:default}
+.lead__done .btn{margin-top:1.4rem}
 
 .sketch-modal{position:fixed;inset:0;z-index:9998;display:flex;align-items:center;justify-content:center;
   background:rgba(8,8,7,.9);padding:clamp(1rem,4vw,2.5rem);animation:glb-fade .25s ease}

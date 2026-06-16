@@ -92,8 +92,8 @@ export default function Header() {
     <header
       className={`hdr${onDark ? "" : " on-light"}${collapsed ? " collapsed" : ""}${open ? " open" : ""}`}
     >
-      <a href="/" className="hdr__logo" onClick={(e) => goTo(e, "/")} aria-label="ותחזנה">
-        <img src="/logo.png" alt="ותחזנה" />
+      <a href="/" className="hdr__logo" onClick={(e) => goTo(e, "/")} aria-label="ותחזינה">
+        <img src="/logo.png" alt="ותחזינה" />
       </a>
       <nav className={`hdr__nav${open ? " open" : ""}`}>
         {LINKS.map((l) => (

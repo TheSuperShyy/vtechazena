@@ -4,6 +4,7 @@ import "./globals.css";
 import "./site.css";
 import SmoothScroll from "@/components/site/SmoothScroll";
 import Cursor from "@/components/site/Cursor";
+import LeadPopup from "@/components/site/LeadPopup";
 
 const assistant = Assistant({
   subsets: ["hebrew", "latin"],
@@ -25,9 +26,9 @@ const pinyon = Pinyon_Script({
 });
 
 export const metadata: Metadata = {
-  title: "ותחזנה — סטודיו לאמנות קיר",
+  title: "ותחזינה · סטודיו לאמנות קיר",
   description:
-    "ותחזנה — סטודיו לציורי קיר ייחודיים בהשראת זכר לחורבן. מותאמים אישית, בכל גודל ובכל סגנון.",
+    "ותחזינה · סטודיו לציורי קיר ייחודיים בהשראת זכר לחורבן. מותאמים אישית, בכל גודל ובכל סגנון.",
 };
 
 export const viewport: Viewport = {
@@ -48,6 +49,7 @@ export default function RootLayout({
       <body className="site">
         <SmoothScroll>{children}</SmoothScroll>
         <Cursor />
+        <LeadPopup />
       </body>
     </html>
   );

@@ -10,13 +10,13 @@ export default function Hero() {
         <img src="/work/IMG_5547.jpg" alt="" />
         <span className="hero__scrim"></span>
       </div>
-      <h1 className="hero__display">V&apos;Techazena</h1>
+      <h1 className="hero__display">ותחזינה</h1>
       <div className="hero__center">
-        <p className="hero__kicker">ותחזנה · סטודיו לאמנות קיר · ישראל</p>
+        <p className="hero__kicker">ותחזינה · סטודיו לאמנות קיר · ישראל</p>
         <p className="hero__line">
-          הופכים קירות ליצירה שאי אפשר להתעלם ממנה.
+          קירות הבית חוצבים זיכרון.
           <br />
-          אמנות קיר ברמה עולמית.
+          יצירות בעיצוב ייחודי, המשלבות זכר לחורבן, אמנות מוקפדת וכיסופים לבניין המקדש.
         </p>
       </div>
       <span className="hero__hello">שלום</span>

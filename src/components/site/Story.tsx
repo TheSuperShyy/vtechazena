@@ -1,51 +1,52 @@
 /* eslint-disable @next/next/no-img-element */
-// Company story / "our story" (היסטוריית החברה) — editorial split: a relief
-// photo beside the narrative, with the prayer the brand is named after pulled
-// out as a gold quote. Text reveals via WhisperReveal like the other sections.
+// Company story / "our story" — the founder's first-person story (Achituv Sasson
+// Maman), with the prayer the brand is named after pulled out as a gold quote.
+// Text reveals via WhisperReveal like the other sections.
 export default function Story() {
   return (
     <section className="section story" id="story">
       <div className="story__grid">
         <div className="story__text">
-          <span className="services-eyebrow">הסיפור שלנו</span>
-          <h2 className="story__title">סיפורה של ותחזינה</h2>
+          <span className="services-eyebrow">אודות</span>
+          <h2 className="story__title">הסיפור שלנו</h2>
 
           <p className="story__lead">
-            “ותחזינה” נולדה מתוך מפגש בין אמנות, זיכרון וגעגוע. השם שלנו שואב
-            השראה מן התפילה העתיקה:
+            שמי אחיטוב ששון ממן, מייסד ובעלים של “ותחזינה”. מאז שאני זוכר את
+            עצמי, שני עולמות ליוו אותי והיוו חלק מרכזי בחיי: עולם האמנות והכמיהה
+            לבית המקדש.
           </p>
-          <p className="story__quote">ותחזינה עינינו בשובך לציון ברחמים</p>
 
           <div className="story__body">
             <p>
-              תפילה עם מבט קדימה, המבטאת את הכמיהה המתמדת לבניין ירושלים והמקדש.
+              היצירה, העיצוב והעבודה בידיים היו עבורי דרך לבטא רעיונות, רגשות
+              וחלומות, ובמקביל ליווה אותי תמיד הגעגוע לירושלים הבנויה.
             </p>
             <p>
-              המסע שלנו החל מתוך רצון להפוך קירות דוממים למרחבים של משמעות. כל
-              יצירה נולדת מתוך חציבה, גילוי ויצירה מחדש — בתהליך שבו שכבות האבן
-              והקיר מספרות סיפור של עבר, הווה ועתיד.
+              במהלך המלחמה נחשפתי לעדויות של חיילים שסיפרו על תמונות וסמלים של
+              אל-אקצא שנתלו בבתי האויב. העדויות הללו עוררו בי מחשבה עמוקה: בזמן
+              שהאויבים שלנו דואגים להנציח את שאיפותיהם ואת חזונם על קירות בתיהם,
+              האם אנו נותנים מקום מספק לכיסופינו לבית המקדש?
             </p>
             <p>
-              בהשראת מורשת ישראל, זכר המקדש ודברי חז״ל, נוצרות עבודות המחברות בין
-              אסתטיקה מוקפדת לבין עומק רוחני.
-            </p>
-            <p>
-              במרכז העשייה של “ותחזינה” עומדת האמונה שאמנות יכולה להיות יותר
-              מקישוט; היא יכולה להיות עדות, זיכרון וחיבור. כל פרויקט מותאם למקומו
-              ולסיפורו, מתוך שאיפה להותיר חותם של יופי, משמעות והשראה לדורות.
+              מתוך החיבור בין אהבתי לאמנות לבין הרצון לתת ביטוי מוחשי לגעגוע
+              למקדש, הוקמה “ותחזינה”. מטרת המיזם היא להפוך את הכיסופים העתיקים
+              ליצירה חיה ונוכחת, ולהכניס אל הבית היהודי זיכרון שאינו ניתן להסרה,
+              שיסמל תקווה וחיבור עמוק לירושלים ולבניין בית המקדש.
             </p>
           </div>
 
+          <p className="story__quote">ותחזינה עינינו בשובך לציון ברחמים</p>
+
           <p className="story__close">
-            “ותחזינה” אינה רק יצירה בקיר — היא מבט אל מה שהיה, חיבור למה שקיים,
-            ותקווה לבניין בקרוב ממש.
+            מתוך תפילה לימים של שלום, אחדות ובשורות טובות, ומתוך תקווה לבניין
+            המקדש בקרוב ממש.
           </p>
         </div>
 
         <figure className="story__media">
           <img
             src="/work/IMG_4329.jpg"
-            alt="ציור קיר חצוב — „אם אשכחך ירושלים”"
+            alt="ציור קיר חצוב: „אם אשכחך ירושלים”"
             loading="lazy"
             decoding="async"
           />

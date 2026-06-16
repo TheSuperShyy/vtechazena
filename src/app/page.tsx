@@ -8,7 +8,7 @@ import Process from "@/components/site/Process";
 import Interlude from "@/components/site/Interlude";
 import Gallery from "@/components/site/Gallery";
 import Testimonials from "@/components/site/Testimonials";
-import Sketches from "@/components/site/Sketches";
+import Workshop from "@/components/site/Workshop";
 import Faq from "@/components/site/Faq";
 import Contact from "@/components/site/Contact";
 import WhisperReveal from "@/components/site/WhisperReveal";
@@ -31,7 +31,7 @@ export default function Home() {
       <Interlude />
       <Gallery />
       <Testimonials />
-      <Sketches />
+      <Workshop />
       <Faq />
       <Contact />
       <WhisperReveal />
