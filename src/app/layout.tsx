@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Assistant, Frank_Ruhl_Libre, Pinyon_Script } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import "./site.css";
 import SmoothScroll from "@/components/site/SmoothScroll";
@@ -24,6 +25,14 @@ const pinyon = Pinyon_Script({
   variable: "--font-pinyon",
   display: "swap",
 });
+// Oraita (Nerya Studio) — the brand's professional Hebrew display font, used for
+// the "ותחזינה" wordmark. Regular weight only.
+const oraita = localFont({
+  src: "./fonts/NBMOraita-Regular.woff2",
+  weight: "400",
+  variable: "--font-oraita",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "ותחזינה · סטודיו לאמנות קיר",
@@ -44,7 +53,7 @@ export default function RootLayout({
     <html
       lang="he"
       dir="rtl"
-      className={`${assistant.variable} ${frank.variable} ${pinyon.variable}`}
+      className={`${assistant.variable} ${frank.variable} ${pinyon.variable} ${oraita.variable}`}
     >
       <body className="site">
         <SmoothScroll>{children}</SmoothScroll>

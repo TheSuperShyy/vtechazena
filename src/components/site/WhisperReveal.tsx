@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useLayoutEffect } from "react";
+import { useLenis } from "lenis/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -56,6 +57,19 @@ function whisperize(el: HTMLElement): HTMLElement[] {
 }
 
 export default function WhisperReveal() {
+  // Lenis drives the smooth scroll; ScrollTrigger must hear about every Lenis
+  // scroll, or its triggers go stale and some sections never reveal (words stuck
+  // at opacity:0). ReactLenis runs its own rAF, so we only forward scroll events.
+  const lenis = useLenis();
+  useEffect(() => {
+    if (!lenis) return;
+    gsap.registerPlugin(ScrollTrigger);
+    const onScroll = () => ScrollTrigger.update();
+    lenis.on("scroll", onScroll);
+    ScrollTrigger.refresh();
+    return () => lenis.off("scroll", onScroll);
+  }, [lenis]);
+
   useIsomorphicLayoutEffect(() => {
     if (typeof window === "undefined") return;
     gsap.registerPlugin(ScrollTrigger);
@@ -74,6 +88,7 @@ export default function WhisperReveal() {
         .filter((el) => !el.closest(".pcard")) // photo-stack card text stays static (hover-animated)
         .filter((el) => !el.closest(".testimonials")) // has its own carousel; keep heading visible
         .filter((el) => !el.closest(".faq")) // FAQ has its own accordion animation
+        .filter((el) => !el.closest(".footer")) // footer sits at the page bottom; its trigger can't reach "top 88%", so keep it plainly visible
         .filter((el) => !el.matches(SKIP))
         .filter((el) => !el.dataset.whispered)
         .filter((el) => (el.textContent ?? "").trim().length > 0);
@@ -173,7 +188,21 @@ export default function WhisperReveal() {
       ScrollTrigger.refresh();
     });
 
-    return () => ctx.revert();
+    // Fonts swapping in and images loading shift the page height after the first
+    // refresh, which leaves trigger start positions stale (so a section far down
+    // can never cross its trigger and stays hidden). Re-measure once those settle.
+    const refresh = () => ScrollTrigger.refresh();
+    if (document.fonts?.ready) document.fonts.ready.then(refresh);
+    window.addEventListener("load", refresh);
+    const t1 = window.setTimeout(refresh, 600);
+    const t2 = window.setTimeout(refresh, 1600);
+
+    return () => {
+      window.removeEventListener("load", refresh);
+      clearTimeout(t1);
+      clearTimeout(t2);
+      ctx.revert();
+    };
   }, []);
 
   return null;
