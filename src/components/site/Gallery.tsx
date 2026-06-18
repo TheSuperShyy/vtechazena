@@ -96,7 +96,7 @@ export default function Gallery() {
         ))}
       </div>
 
-      <motion.div layout className="gallery__grid" role="list" data-dark>
+      <motion.div layout className="gallery__grid" role="list">
         <AnimatePresence mode="popLayout">
           {filtered.map((it, i) => (
             <motion.div

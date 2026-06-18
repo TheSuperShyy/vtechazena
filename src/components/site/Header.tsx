@@ -19,14 +19,18 @@ function isDarkColor(color: string): boolean | null {
   return 0.299 * r + 0.587 * g + 0.114 * b < 140; // perceived luminance threshold
 }
 
-// Sample the real backdrop behind a point: dark on the first image / [data-dark]
-// zone / opaque dark background found beneath the navbar; light if nothing dark.
+// Sample the real backdrop behind a point: dark on the first [data-dark] zone or
+// opaque dark background found beneath the navbar; light if nothing dark. Every
+// dark section is tagged [data-dark]; we deliberately do NOT treat a bare <img>
+// as dark, since light sections (Story, Work, gallery tiles) also contain images.
 function probeDark(x: number, y: number): boolean {
   if (typeof document === "undefined" || !document.elementsFromPoint) return true;
   for (const el of document.elementsFromPoint(x, y)) {
     if (!(el instanceof HTMLElement) || el.closest(".hdr")) continue; // skip the bar
-    if (el.tagName === "IMG" || el.closest("[data-dark]")) return true;
-    const dark = isDarkColor(getComputedStyle(el).backgroundColor);
+    if (el.closest("[data-dark]")) return true;
+    const cs = getComputedStyle(el);
+    if (cs.opacity === "0" || cs.visibility === "hidden") continue; // invisible — not a real backdrop (e.g. an opacity:0 hover overlay)
+    const dark = isDarkColor(cs.backgroundColor);
     if (dark !== null) return dark; // first opaque background decides
   }
   return false;
