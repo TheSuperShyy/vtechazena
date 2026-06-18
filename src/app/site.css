@@ -88,10 +88,14 @@
 .hero{position:relative;height:100vh;height:100svh;width:100%;overflow:hidden;background:#3a3f4a}
 .hero__media{position:absolute;inset:0;z-index:1}
 .hero__media img,.hero__media video{width:100%;height:100%;object-fit:cover}
-.hero__scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.45),rgba(0,0,0,.2) 35%,rgba(0,0,0,.65))}
+/* Vertical gradient + a soft radial "pedestal" behind the wordmark so the gold
+   keeps the same contrast/pop over the light wall on every crop (mobile included). */
+.hero__scrim{position:absolute;inset:0;background:
+  radial-gradient(78% 44% at 50% 41%,rgba(0,0,0,.5),rgba(0,0,0,.14) 56%,transparent 78%),
+  linear-gradient(180deg,rgba(0,0,0,.45),rgba(0,0,0,.2) 35%,rgba(0,0,0,.65))}
 .hero__display{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;padding-bottom:14vh;
   font-family:var(--vt-display);font-weight:400;font-size:clamp(4rem,16vw,16rem);line-height:1;white-space:nowrap;
-  color:#e8c98c;mix-blend-mode:difference;pointer-events:none;letter-spacing:.01em;
+  color:#e9cb8e;text-shadow:0 2px 30px rgba(0,0,0,.55),0 2px 7px rgba(0,0,0,.7);pointer-events:none;letter-spacing:.01em;
   -webkit-mask-image:linear-gradient(105deg,#000 0%,#000 40%,transparent 58%,transparent 100%);
   mask-image:linear-gradient(105deg,#000 0%,#000 40%,transparent 58%,transparent 100%);
   -webkit-mask-size:300% 100%;mask-size:300% 100%;
@@ -634,7 +638,7 @@
      keep gutters and section rhythm consistent as the screen grows/shrinks. */
   .site{--vt-gutter:clamp(1rem,4.6vw,1.9rem);--vt-sec-y:clamp(2.6rem,13vw,5.2rem)}
 
-  .hdr,.hdr.collapsed{height:clamp(64px,16.5vw,88px)}
+  .hdr,.hdr.collapsed{height:clamp(78px,21vw,98px)}
   .hdr__nav,.hdr.collapsed .hdr__nav{position:fixed;inset:0;z-index:3;background:var(--vt-dark);
     flex-direction:column;align-items:center;justify-content:center;
     gap:clamp(1.4rem,5.5vw,2.1rem);font-size:clamp(1.3rem,6vw,1.7rem);
@@ -647,16 +651,16 @@
   .hdr__cta{display:none}
   .hdr__burger{display:flex;left:var(--vt-gutter);right:auto}
   .hdr__logo,.hdr.collapsed .hdr__logo{right:var(--vt-gutter);left:auto;transform:translateY(-50%);
-    width:clamp(54px,15vw,74px);height:clamp(54px,15vw,74px)}
+    width:clamp(68px,20vw,90px);height:clamp(68px,20vw,90px)}
   /* Light pill on the dark slide-out panel. */
   .hdr__nav .hdr__nav-cta{display:inline-block;margin-top:1rem;font-size:1rem;
     background:#fff;color:var(--vt-ink);border:1px solid #fff;
     border-radius:100px;padding:.85rem 2.4rem}
 
   .hero{padding:0}
-  .hero__display{font-size:clamp(2.6rem,13vw,6rem)}
-  .hero__kicker{font-size:clamp(.72rem,2.9vw,.85rem)}
-  .hero__line{font-size:clamp(1rem,4.2vw,1.3rem)}
+  .hero__display{font-size:clamp(5rem,27vw,9.5rem)}
+  .hero__kicker{font-size:clamp(.82rem,3.4vw,1rem)}
+  .hero__line{font-size:clamp(1.2rem,5.2vw,1.55rem)}
   .hero__hello{right:var(--vt-gutter);bottom:var(--vt-gutter)}
 
   .section{padding:var(--vt-sec-y) var(--vt-gutter)}
