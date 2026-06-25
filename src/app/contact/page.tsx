@@ -18,7 +18,7 @@ const WA_LINK =
   "https://wa.me/" +
   WA_NUMBER +
   "?text=" +
-  encodeURIComponent("היי! אשמח לפרטים על יצירת קיר 🙂");
+  encodeURIComponent("היי, הגעתי מהאתר ואשמח לשמוע עוד פרטים");
 
 const METHODS = [
   { label: "וואטסאפ", value: "שלחו הודעה ונחזור אליכם", href: WA_LINK, cta: "פתיחת צ׳אט ←" },
