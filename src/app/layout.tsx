@@ -55,7 +55,10 @@ export default function RootLayout({
       dir="rtl"
       className={`${assistant.variable} ${frank.variable} ${pinyon.variable} ${oraita.variable}`}
     >
-      <body className="site">
+      {/* suppressHydrationWarning: browser extensions (e.g. Bitdefender) inject
+          attributes onto <body> before React hydrates; this ignores those on this
+          element only — real mismatches inside the app are still reported. */}
+      <body className="site" suppressHydrationWarning>
         <SmoothScroll>{children}</SmoothScroll>
         <Cursor />
         <LeadPopup />
