@@ -99,14 +99,18 @@
   radial-gradient(78% 44% at 50% 41%,rgba(0,0,0,.5),rgba(0,0,0,.14) 56%,transparent 78%),
   linear-gradient(180deg,rgba(0,0,0,.45),rgba(0,0,0,.2) 35%,rgba(0,0,0,.65))}
 .hero__display{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;padding-bottom:14vh;
-  font-family:var(--vt-display);font-weight:400;font-size:clamp(4rem,16vw,16rem);line-height:1;white-space:nowrap;
-  color:#e9cb8e;text-shadow:0 2px 30px rgba(0,0,0,.55),0 2px 7px rgba(0,0,0,.7);pointer-events:none;letter-spacing:.01em;
+  font-family:var(--vt-display);font-weight:400;font-size:clamp(3.4rem,13vw,13rem);line-height:1;white-space:nowrap;
+  color:#e9cb8e;text-shadow:0 2px 30px rgba(0,0,0,.55),0 2px 7px rgba(0,0,0,.7);pointer-events:none;letter-spacing:.03em;
   -webkit-mask-image:linear-gradient(105deg,#000 0%,#000 40%,transparent 58%,transparent 100%);
   mask-image:linear-gradient(105deg,#000 0%,#000 40%,transparent 58%,transparent 100%);
   -webkit-mask-size:300% 100%;mask-size:300% 100%;
   -webkit-mask-position:100% 0;mask-position:100% 0;
   -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
   animation:hero-paint 3.8s cubic-bezier(.5,.02,.2,1) .3s forwards}
+/* End-letter swashes only (each wrapped in its own span in Hero.tsx): ss02 = top figure-8
+   loop on the first letter (ו); ss05 = bottom swirl on the last letter (ה). Middle stays plain. */
+.hero__swash{-webkit-font-feature-settings:"ss02" 1;font-feature-settings:"ss02" 1}
+.hero__swash-end{-webkit-font-feature-settings:"ss05" 1;font-feature-settings:"ss05" 1}
 @keyframes hero-paint{to{-webkit-mask-position:0% 0;mask-position:0% 0}}
 @media (prefers-reduced-motion:reduce){
   .hero__display{-webkit-mask-image:none;mask-image:none;animation:none}
@@ -682,7 +686,7 @@
     border-radius:100px;padding:.85rem 2.4rem}
 
   .hero{padding:0}
-  .hero__display{font-size:clamp(5rem,27vw,9.5rem)}
+  .hero__display{font-size:clamp(3.6rem,21vw,7.5rem)}
   .hero__kicker{font-size:clamp(.82rem,3.4vw,1rem)}
   .hero__line{font-size:clamp(1.2rem,5.2vw,1.55rem)}
   .hero__hello{right:var(--vt-gutter);bottom:var(--vt-gutter)}
