@@ -19,7 +19,7 @@ export default function Contact() {
         <div className="footer__links">
           <Link href="/contact">צרו קשר</Link>
           <a href="#">Instagram</a>
-          <a href="https://wa.me/972500000000">WhatsApp</a>
+          <a href={WA}>WhatsApp</a>
         </div>
         <span className="footer__copy">© ותחזינה · כל הזכויות שמורות</span>
       </footer>

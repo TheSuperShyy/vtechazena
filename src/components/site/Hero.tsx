@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 const WA =
-  "https://wa.me/972500000000?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A4%D7%A8%D7%98%D7%99%D7%9D";
+  "https://wa.me/972527710712?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A4%D7%A8%D7%98%D7%99%D7%9D";
 
 export default function Hero() {
   return (

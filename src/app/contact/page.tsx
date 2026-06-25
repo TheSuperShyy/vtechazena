@@ -7,10 +7,10 @@ export const metadata = {
   description: "כל הדרכים ליצור קשר עם ותחזינה: וואטסאפ, טלפון, אימייל ורשתות חברתיות.",
 };
 
-// client-pending: replace placeholders with the real WhatsApp number, phone, email,
-// and social handles. International WA format, no '+'.
-const WA_NUMBER = "972500000000";
-const PHONE = "050-000-0000";
+// client-pending: confirm email + social handles. WhatsApp number is live.
+// WA_NUMBER is international format, no '+'.
+const WA_NUMBER = "972527710712";
+const PHONE = "052-771-0712";
 const EMAIL = "hello@vtechazena.co.il";
 const INSTAGRAM = "https://instagram.com/";
 
