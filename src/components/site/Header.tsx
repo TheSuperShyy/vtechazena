@@ -39,8 +39,10 @@ function probeDark(x: number, y: number): boolean {
 export default function Header() {
   const [collapsed, setCollapsed] = useState(false);
   const [onDark, setOnDark] = useState(true);
+  const [logoDark, setLogoDark] = useState(true);
   const [open, setOpen] = useState(false);
   const lastY = useRef(0);
+  const logoRef = useRef<HTMLAnchorElement>(null);
 
   // This handler (a) collapses the bar to the logo on scroll-down / expands on
   // scroll-up, and (b) detects whether the bar sits over a dark backdrop, which
@@ -57,7 +59,16 @@ export default function Header() {
     else if (y > lastY.current + 4) setCollapsed(true);
     else if (y < lastY.current - 4) setCollapsed(false);
     lastY.current = y;
+    // The bar (nav/CTA) follows the backdrop at screen-center; the LOGO follows the
+    // backdrop directly behind ITSELF (it sits at the RTL right edge, which can be over
+    // a different zone than the center — e.g. light body beside a centered dark visual).
     setOnDark(probeDark(window.innerWidth / 2, 50));
+    const r = logoRef.current?.getBoundingClientRect();
+    setLogoDark(
+      r && r.width
+        ? probeDark(r.left + r.width / 2, r.top + r.height / 2)
+        : probeDark(window.innerWidth / 2, 50)
+    );
   }, [open]);
 
   // Lenis drives the page scroll; subscribe to its tick (plus native fallbacks).
@@ -94,9 +105,9 @@ export default function Header() {
 
   return (
     <header
-      className={`hdr${onDark ? "" : " on-light"}${collapsed ? " collapsed" : ""}${open ? " open" : ""}`}
+      className={`hdr${onDark ? "" : " on-light"}${logoDark ? "" : " logo-light"}${collapsed ? " collapsed" : ""}${open ? " open" : ""}`}
     >
-      <a href="/" className="hdr__logo" onClick={(e) => goTo(e, "/")} aria-label="ותחזינה">
+      <a ref={logoRef} href="/" className="hdr__logo" onClick={(e) => goTo(e, "/")} aria-label="ותחזינה">
         <img src="/logo.png" alt="ותחזינה" />
       </a>
       <nav className={`hdr__nav${open ? " open" : ""}`}>
