@@ -1,4 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
+import SwashWord from "./SwashWord";
+import { SWASH } from "./swashGlyphs";
+
 // To change the WhatsApp pre-filled message, edit the Hebrew text below (and the number if needed).
 const WA =
   "https://wa.me/972527710712?text=" +
@@ -12,9 +15,8 @@ export default function Hero() {
         <img src="/work/IMG_5547.jpg" alt="" />
         <span className="hero__scrim"></span>
       </div>
-      {/* Swashes on the END letters only: ss02 top loop on the first (ו), ss05 bottom
-          swirl on the last (ה); the middle letters stay plain. */}
-      <h1 className="hero__display"><span className="hero__swash">ו</span>תחזינ<span className="hero__swash-end">ה</span></h1>
+      {/* The wordmark in Oraita's swash letterforms, per the client's typography PDF. */}
+      <h1 className="hero__display"><SwashWord glyphs={SWASH.hero} label="ותחזינה" /></h1>
       <div className="hero__center">
         <p className="hero__kicker">ותחזינה · סטודיו לאמנות קיר · ישראל</p>
         <p className="hero__line">

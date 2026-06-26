@@ -3,13 +3,16 @@
 // the relief photo, with the prayer the brand is named after pulled out as a gold
 // quote, followed by the founder's first-person word ("דבר המייסד").
 // Text reveals via WhisperReveal like the other sections.
+import SwashWord from "./SwashWord";
+import { SWASH } from "./swashGlyphs";
+
 export default function Story() {
   return (
     <section className="section story" id="story">
       <div className="story__grid">
         <div className="story__text">
           <span className="services-eyebrow">אודות</span>
-          <h2 className="story__title">הסיפור שלנו</h2>
+          <h2 className="story__title"><SwashWord glyphs={SWASH.storyTitle} label="הסיפור שלנו" /></h2>
 
           <p className="story__lead">
             “ותחזינה” נולדה מתוך מפגש בין אמנות, זיכרון וגעגוע. השם שלנו שואב
@@ -54,7 +57,7 @@ export default function Story() {
       </div>
 
       <div className="story__founder">
-        <h3 className="story__subtitle">דבר המייסד</h3>
+        <h3 className="story__subtitle"><SwashWord glyphs={SWASH.founder} label="דבר המייסד" /></h3>
         <p>
           שמי אחיטוב ששון ממן, מייסד ובעלים של “ותחזינה”. מאז שאני זוכר את עצמי,
           שני עולמות ליוו אותי והיוו חלק מרכזי בחיי: עולם האמנות והכמיהה לבית
