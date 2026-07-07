@@ -18,9 +18,9 @@ export default function Hero() {
       {/* The wordmark in Oraita's swash letterforms, per the client's typography PDF. */}
       <h1 className="hero__display"><SwashWord glyphs={SWASH.hero} label="ותחזינה" /></h1>
       <div className="hero__center">
-        <p className="hero__kicker">ותחזינה · סטודיו לאמנות קיר · ישראל</p>
+        <p className="hero__kicker">ותחזינה · סטודיו לאמנות חצובה בקיר · ישראל</p>
         <p className="hero__line">
-          קירות הבית חוצבים זיכרון.
+          חוצבים זיכרון־יוצרים מציאות
           <br />
           יצירות בעיצוב ייחודי, המשלבות זכר לחורבן, אמנות מוקפדת וכיסופים לבניין המקדש.
         </p>

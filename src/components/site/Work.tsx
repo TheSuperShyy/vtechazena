@@ -1,6 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import { useEffect, useRef, useState } from "react";
+import SwashWord from "./SwashWord";
+import { SWASH } from "./swashGlyphs";
 
 // Every photo in /public/work (hero-bleed.jpg is the hero image, not a gallery
 // piece, so it's excluded). The first nine are the curated openers; the rest
@@ -52,7 +54,7 @@ export default function Work() {
     <section className="section section--work" id="work">
       <div className="section__head reveal">
         <span className="eyebrow">עבודות</span>
-        <h2 className="section__title">מבחר מהיצירות שלנו</h2>
+        <h2 className="section__title">מבחר <SwashWord glyphs={SWASH.mehayetzirot} label="מהיצירות" /> שלנו</h2>
       </div>
 
       <div className="carousel">

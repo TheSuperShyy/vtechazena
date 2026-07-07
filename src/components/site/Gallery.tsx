@@ -8,6 +8,8 @@ import { useState, useEffect, useCallback } from "react";
 import type { KeyboardEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { WA } from "./Hero";
+import SwashWord from "./SwashWord";
+import { SWASH } from "./swashGlyphs";
 
 const SERIES = [
   { key: "יסוד", price: "1,800–2,500 ₪", dir: "tiers/base", images: ["1.png", "2.png", "3.png", "4.png", "7.png"] },
@@ -79,7 +81,7 @@ export default function Gallery() {
     <section className="section gallery" id="series" aria-labelledby="gallery-heading">
       <div className="gallery__head">
         <span className="services-eyebrow">גלריה</span>
-        <h2 id="gallery-heading" className="gallery__title">העיצובים שלנו</h2>
+        <h2 id="gallery-heading" className="gallery__title"><SwashWord glyphs={SWASH.haitzuvim} label="העיצובים שלנו" /></h2>
         <p className="gallery__lead">עיינו ביצירות לפי הסדרה, ולחצו על התמונה להגדלה.</p>
       </div>
 
