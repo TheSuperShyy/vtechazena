@@ -12,7 +12,14 @@ export default function Hero() {
     <section className="hero" id="top" data-dark>
       <div className="hero__media">
         {/* Swap this <img> for a <video autoPlay muted loop playsInline> when you have a clip */}
-        <img src="/work/IMG_5547.jpg" alt="" />
+        {/* The client's new hero photo is portrait, so it only serves portrait (mobile) screens;
+            landscape (desktop) screens keep the original full-bleed shot. On mobile the photo
+            renders `contain` (whole panel visible) over this blurred copy as the fill. */}
+        <img className="hero__media-blur" src="/work/hero-main.jpg" alt="" aria-hidden="true" />
+        <picture>
+          <source media="(min-aspect-ratio: 1/1)" srcSet="/work/IMG_5547.jpg" />
+          <img src="/work/hero-main.jpg" alt="" />
+        </picture>
         <span className="hero__scrim"></span>
       </div>
       {/* The wordmark in Oraita's swash letterforms, per the client's typography PDF. */}

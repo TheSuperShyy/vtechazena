@@ -4,16 +4,31 @@ import { useEffect, useRef, useState } from "react";
 import SwashWord from "./SwashWord";
 import { SWASH } from "./swashGlyphs";
 
-// Every photo in /public/work (hero-bleed.jpg is the hero image, not a gallery
-// piece, so it's excluded). The first nine are the curated openers; the rest
-// follow in numeric order.
+// The client's full carousel set (New-client revision/carousel-image) converted
+// into /public/work/carousel/. "carousel-main" (the carved שויתי ה׳ panel) opens;
+// the rest follow in shot order, odd-named exports last. Duplicates were dropped:
+// exact copies of the hero/story/tier-card photos (IMG_2589, IMG_4871, IMG_5779,
+// c023efcb-…) and IMG_5514 (angled take of IMG_5515).
 const SLIDES = [
-  "IMG_4860", "IMG_4329", "IMG_4048", "IMG_3534", "IMG_3621",
-  "IMG_3691", "IMG_3803", "IMG_4101", "IMG_4200",
-  "IMG_3125", "IMG_3410", "IMG_3860", "IMG_4089", "IMG_4102",
-  "IMG_4151", "IMG_4152", "IMG_4239", "IMG_4270", "IMG_4326",
-  "IMG_4407", "IMG_4426", "IMG_4492", "IMG_4494", "IMG_4497",
-  "IMG_4588", "IMG_4639", "IMG_4779", "IMG_5547",
+  "carousel-main",
+  "IMG_2423", "IMG_2508", "IMG_2539", "IMG_2603", "IMG_2764",
+  "IMG_2844", "IMG_2859", "IMG_2944", "IMG_3091", "IMG_3125", "IMG_3155",
+  "IMG_3345", "IMG_3357", "IMG_3363", "IMG_3375", "IMG_3407", "IMG_3460",
+  "IMG_3464", "IMG_3507", "IMG_3529", "IMG_3550", "IMG_3574", "IMG_3576",
+  "IMG_3591", "IMG_3618", "IMG_3691", "IMG_3787", "IMG_3799", "IMG_3803",
+  "IMG_3821", "IMG_3831", "IMG_3842", "IMG_3848", "IMG_3860", "IMG_3876",
+  "IMG_3918", "IMG_3955", "IMG_3966", "IMG_4025", "IMG_4027", "IMG_4048",
+  "IMG_4101", "IMG_4102", "IMG_4151", "IMG_4152", "IMG_4200", "IMG_4231",
+  "IMG_4271", "IMG_4273", "IMG_4329", "IMG_4361", "IMG_4362", "IMG_4392",
+  "IMG_4393", "IMG_4406", "IMG_4408", "IMG_4426", "IMG_4476", "IMG_4481",
+  "IMG_4482", "IMG_4538", "IMG_4587", "IMG_4622", "IMG_4638", "IMG_4639",
+  "IMG_4757", "IMG_4779", "IMG_4783", "IMG_4797", "IMG_4825", "IMG_4860",
+  "IMG_4870", "IMG_4948", "IMG_5007", "IMG_5085", "IMG_5111",
+  "IMG_5179", "IMG_5182", "IMG_5214", "IMG_5238", "IMG_5515",
+  "IMG_5547", "IMG_5548", "IMG_5606", "IMG_5636", "IMG_5678", "IMG_5679",
+  "IMG_5698", "IMG_5699", "IMG_5703", "IMG_5997", "IMG_5999",
+  "IMG_6020", "IMG_6041", "IMG_6075", "IMG_6076", "IMG_6104", "IMG_6160",
+  "1000424512", "49df1dc3-18f7-4ccd-bece-04c87d02d717",
 ];
 
 export default function Work() {
@@ -35,10 +50,16 @@ export default function Work() {
 
   const go = (d: number) => setActive((a) => (a + d + n) % n);
 
-  const slideStyle = (i: number): React.CSSProperties => {
+  // Shortest wrap-around distance from the active slide.
+  const rel = (i: number) => {
     let off = i - active;
     if (off > n / 2) off -= n;
     if (off < -n / 2) off += n;
+    return off;
+  };
+
+  const slideStyle = (i: number): React.CSSProperties => {
+    const off = rel(i);
     const abs = Math.abs(off);
     return {
       // RTL coverflow: previous slides (off<0) fan to the right, next slides
@@ -77,7 +98,11 @@ export default function Work() {
               style={slideStyle(i)}
               onClick={() => i !== active && setActive(i)}
             >
-              <img loading="lazy" src={`/work/${s}.jpg`} alt="" />
+              {/* With ~106 slides, only give nearby slides a src — all of them sit
+                  stacked "in viewport", so loading=lazy alone would fetch the lot. */}
+              {Math.abs(rel(i)) <= 4 && (
+                <img loading="lazy" src={`/work/carousel/${s}.jpg`} alt="" />
+              )}
             </figure>
           ))}
         </div>
