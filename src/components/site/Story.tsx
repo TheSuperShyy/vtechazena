@@ -18,7 +18,7 @@ export default function Story() {
             “ותחזינה” נולדה מתוך מפגש בין אמנות, זיכרון וגעגוע. השם שלנו שואב
             השראה מן התפילה העתיקה:
           </p>
-          <p className="story__quote">ותחזינה עינינו בשובך לציון ברחמים</p>
+          <p className="story__quote"><SwashWord glyphs={SWASH.verse} label="״ותחזינה עינינו בשובך לציון ברחמים״" /></p>
 
           <div className="story__body">
             <p>

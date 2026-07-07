@@ -8,6 +8,8 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
+import SwashWord from "./SwashWord";
+import { SWASH } from "./swashGlyphs";
 
 const SHOTS = [
   { src: "/feedback/9.jpg", alt: "המלצת לקוח: אחי היקר, תודה רבה, יצא מדהים" },
@@ -60,9 +62,9 @@ export default function Testimonials() {
     <section className="section testimonials" id="testimonials">
       <div className="testimonials__head">
         <span className="services-eyebrow">לקוחות ממליצים</span>
-        <h2 className="testimonials__title">מה הלקוחות אומרים</h2>
+        <h2 className="testimonials__title"><SwashWord glyphs={SWASH.testimonials} label="מה הלקוחות שלנו אומרים" /></h2>
         <p className="testimonials__lead">
-          הודעות אמיתיות מלקוחות מרוצים. החליקו לצדדים, ולחצו על תמונה להגדלה.
+          הודעות אותנטיות מלקוחות מרוצים. החליקו לצדדים, ולחצו על תמונה להגדלה.
         </p>
       </div>
 

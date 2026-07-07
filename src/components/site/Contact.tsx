@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { WA } from "./Hero";
+import SwashWord from "./SwashWord";
+import { SWASH } from "./swashGlyphs";
 
 export default function Contact() {
   return (
@@ -15,7 +17,7 @@ export default function Contact() {
       </section>
 
       <footer className="footer">
-        <span className="footer__logo">ותחזינה</span>
+        <SwashWord glyphs={SWASH.hero} label="ותחזינה" className="footer__logo" />
         <div className="footer__links">
           <Link href="/contact">צרו קשר</Link>
           <a href="#">Instagram</a>

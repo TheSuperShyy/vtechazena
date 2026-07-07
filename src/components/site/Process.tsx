@@ -38,7 +38,7 @@ export default function Process() {
     <section className="section section--services" id="process" data-dark>
       <div className="section__head reveal">
         <span className="services-eyebrow">מה אנחנו עושים</span>
-        <h2 className="services-title">המסלולים שלנו</h2>
+        <h2 className="services-title"><SwashWord glyphs={SWASH.hamaslulim} label="המסלולים שלנו" /></h2>
         <p className="services-lead">
           שלושה מסלולים ברמות שונות של עיצוב. כל מסלול מאפשר התאמה אישית לפי גודל
           החלל, הסגנון והתקציב.

@@ -30,6 +30,10 @@
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 /* The swashes extend below/above the line box — don't let the headings clip them. */
 .story__title,.story__subtitle,.tier-card__title{overflow:visible}
+/* Round-2 swash headings (Intro word, Work title word, tracks, gallery, testimonials,
+   footer, story verse) — same clip guard; they inherit each section's own heading color. */
+.section__title,.services-title,.gallery__title,.testimonials__title,
+.intro__script,.story__quote,.footer__logo{overflow:visible}
 /* All the swash headings share the brand gold (reads on light + dark); the hero
    wordmark keeps its own metallic gradient. */
 .story__title .swash-word,.story__subtitle .swash-word,.tier-card__title .swash-word{color:var(--vt-accent)}

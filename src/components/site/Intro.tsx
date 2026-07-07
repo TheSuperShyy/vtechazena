@@ -1,10 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
+import SwashWord from "./SwashWord";
+import { SWASH } from "./swashGlyphs";
+
 export default function Intro() {
   return (
     <section className="intro" id="intro">
       <h2 className="intro__heading reveal">
         <span className="intro__sans">ברוכים הבאים ל</span>
-        <span className="intro__script">ותחזינה</span>
+        <span className="intro__script"><SwashWord glyphs={SWASH.hero} label="ותחזינה" /></span>
       </h2>
 
       <div className="intro__grid">
@@ -86,8 +89,8 @@ export default function Intro() {
               <path d="M9 12l2 2 4-4" />
             </svg>
           </span>
-          <span className="stat__num" dir="ltr">50+</span>
-          <span className="stat__label">קירות שציירנו</span>
+          <span className="stat__num" dir="ltr">100+</span>
+          <span className="stat__label">קירות שעיצבנו וחצבנו</span>
         </div>
         <div className="stat reveal">
           <span className="stat__icon" aria-hidden="true">
