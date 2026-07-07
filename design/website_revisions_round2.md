@@ -131,8 +131,12 @@ standalone "ותחזינה" line reproduces the existing `SWASH.hero` array exac
 ---
 
 ## ⛔ Blocked — pending the client's Google Drive folder
-- Story section image (currently `/work/IMG_4329.jpg`).
-- First image in the Work carousel.
-- Track/package images matched to each headline, ideally in **square** frames.
+- ~~Story section image~~ — **DONE** (`/work/story-main.jpg` from `New-client revision/`).
+- ~~Work carousel images~~ — **DONE**, superseded by the client's full set: all 105 photos
+  from `New-client revision/carousel-image/` converted to `/public/work/carousel/`, with
+  `carousel-main` (the שויתי ה׳ panel from `carousel-main-image.HEIC`) as the opener.
+  `IMG_3622.MOV` in that folder was skipped (video — could become a video slide later).
+- ~~Track/package images~~ — **DONE** (`tier-yesod/hadar/tiferet.jpg` in `Process.tsx`;
+  cards use full-bleed cover, not square frames).
 - Testimonial screenshots (`/public/feedback/*`) — client is adding/replacing some
-  (incl. removing one that shows a customer's exact address).
+  (incl. removing one that shows a customer's exact address). **Still pending.**

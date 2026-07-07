@@ -109,8 +109,17 @@
 
 /* Hero */
 .hero{position:relative;height:100vh;height:100svh;width:100%;overflow:hidden;background:#3a3f4a}
-.hero__media{position:absolute;inset:0;z-index:1}
-.hero__media img,.hero__media video{width:100%;height:100%;object-fit:cover}
+.hero__media{position:absolute;inset:0;z-index:1;overflow:hidden}
+/* img is absolutely positioned so the <picture> wrapper (mobile vs desktop source) doesn't
+   affect layout. */
+.hero__media img,.hero__media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero__media-blur{display:none}
+/* Portrait (mobile) screens: the panel photo is wider than the screen, so `cover` clips its
+   sides — show the whole artwork (contain) over a blurred copy as the fill instead. */
+@media (max-aspect-ratio:1/1){
+  .hero__media-blur{display:block;filter:blur(24px) brightness(.82);transform:scale(1.12)}
+  .hero__media picture img{object-fit:contain}
+}
 /* Vertical gradient + a soft radial "pedestal" behind the wordmark so the gold
    keeps the same contrast/pop over the light wall on every crop (mobile included). */
 .hero__scrim{position:absolute;inset:0;background:
@@ -705,6 +714,9 @@
 
   .hero{padding:0}
   .hero__display{font-size:clamp(3.6rem,21vw,7.5rem)}
+  /* Text block sits right under the centered wordmark (not pinned to the bottom),
+     so the whole composition reads centered on the phone. */
+  .hero__center{top:53%;bottom:auto}
   .hero__kicker{font-size:clamp(.82rem,3.4vw,1rem)}
   .hero__line{font-size:clamp(1.2rem,5.2vw,1.55rem)}
   .hero__hello{right:var(--vt-gutter);bottom:var(--vt-gutter)}

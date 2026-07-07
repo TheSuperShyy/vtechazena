@@ -48,8 +48,8 @@ export default function Story() {
 
         <figure className="story__media">
           <img
-            src="/work/IMG_4329.jpg"
-            alt="ציור קיר חצוב: „אם אשכחך ירושלים”"
+            src="/work/story-main.jpg"
+            alt="יצירת קיר חצובה: ״ותחזינה עינינו בשובך לציון״"
             loading="lazy"
             decoding="async"
           />
