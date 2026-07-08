@@ -9,8 +9,8 @@ export const metadata = {
 
 // client-pending: confirm email + social handles. WhatsApp number is live.
 // WA_NUMBER is international format, no '+'.
-const WA_NUMBER = "972527710712";
-const PHONE = "052-771-0712";
+const WA_NUMBER = "972559283403";
+const PHONE = "055-928-3403";
 const EMAIL = "hello@vtechazena.co.il";
 const INSTAGRAM = "https://instagram.com/";
 

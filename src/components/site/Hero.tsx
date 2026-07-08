@@ -4,7 +4,7 @@ import { SWASH } from "./swashGlyphs";
 
 // To change the WhatsApp pre-filled message, edit the Hebrew text below (and the number if needed).
 const WA =
-  "https://wa.me/972527710712?text=" +
+  "https://wa.me/972559283403?text=" +
   encodeURIComponent("היי, הגעתי מהאתר ואשמח לשמוע עוד פרטים");
 
 export default function Hero() {
