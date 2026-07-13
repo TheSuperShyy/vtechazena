@@ -13,10 +13,12 @@ export default function SwashWord({
 }) {
   return (
     <>
-      <span aria-hidden="true" className={`swash-word${className ? ` ${className}` : ""}`}>
+      {/* translate="no": Google Translate rewrites text nodes mid-hydration, which corrupts
+          the PUA glyphs and can unclip the sr-only twin (giant duplicate wordmark). */}
+      <span aria-hidden="true" translate="no" className={`swash-word${className ? ` ${className}` : ""}`}>
         {String.fromCodePoint(...glyphs)}
       </span>
-      <span className="sr-only">{label}</span>
+      <span className="sr-only" translate="no">{label}</span>
     </>
   );
 }
