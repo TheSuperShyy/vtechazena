@@ -157,6 +157,10 @@
     background:linear-gradient(100deg,rgba(176,125,56,.8) 0%,rgba(241,225,166,.82) 25%,rgba(205,164,85,.8) 48%,rgba(241,225,166,.82) 70%,rgba(176,125,56,.8) 100%);
     -webkit-background-clip:text;background-clip:text;
     -webkit-text-fill-color:transparent;color:transparent;
+    /* Swash ink sweeps far outside the span's border box, and background-clip:text
+       only paints inside it — pad the box out (margins cancel it for layout) so the
+       flourishes keep their gradient instead of getting cut off. */
+    padding:.5em 2.5em;margin:-.5em -2.5em;
   }
   .hero__display{
     text-shadow:none;
