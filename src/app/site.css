@@ -150,10 +150,15 @@
    "Doing Things Differently" look), applied to the text itself. Mobile keeps the
    solid gold tuned for its smaller, busier crop. */
 @media (min-width:681px){
-  .hero__display{
+  /* Gradient clips to the swash span only — background-clip:text on the h1 itself
+     builds its mask from ALL descendant text, including the .sr-only twin, which
+     painted a second giant plain-letter wordmark. */
+  .hero__display .swash-word{
     background:linear-gradient(100deg,rgba(176,125,56,.8) 0%,rgba(241,225,166,.82) 25%,rgba(205,164,85,.8) 48%,rgba(241,225,166,.82) 70%,rgba(176,125,56,.8) 100%);
     -webkit-background-clip:text;background-clip:text;
     -webkit-text-fill-color:transparent;color:transparent;
+  }
+  .hero__display{
     text-shadow:none;
     filter:drop-shadow(0 3px 16px rgba(0,0,0,.45));
   }
