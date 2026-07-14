@@ -2,26 +2,30 @@
 /* eslint-disable @next/next/no-img-element */
 // Client feedback as an Embla carousel: seamless auto-scroll (loop) that you can
 // also grab and drag (dragFree). Click a screenshot (not a drag) to open it
-// full-size in a lightbox. Cropped set from /cropped-feedback.
-// Note 1.jpg shows a location map, 2.jpg a payment link, 7/8.jpg the iOS menu —
-// included per the owner's choice. `alt` carries the transcribed quote.
+// full-size in a lightbox. Set from images/"client feedback", cropped (status bar
+// + chat headers with client phone numbers removed) and compressed to c1–c6.
+// Some show the iOS long-press menu / payment amounts — included per the owner's
+// choice. `alt` carries the transcribed quote.
 import { useState, useEffect, useCallback, useRef } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
 import SwashWord from "./SwashWord";
 import { SWASH } from "./swashGlyphs";
 
-const SHOTS = [
-  { src: "/feedback/9.jpg", alt: "המלצת לקוח: אחי היקר, תודה רבה, יצא מדהים" },
-  { src: "/feedback/3.jpg", alt: "המלצת לקוח: תודה רבה על העבודה המהממת, מקצועי ודואג לכל פרט, ממליצים בחום" },
-  { src: "/feedback/1.jpg", alt: "המלצת לקוח: תודה רבה על העבודה היפה, שנזכה לבניין בית המקדש בקרוב" },
-  { src: "/feedback/6.jpg", alt: "המלצת לקוח: כולם עפים על האמנות שלך, המקום הכי יפה בבית" },
-  { src: "/feedback/4.jpg", alt: "המלצת לקוח: כולם התלהבו מאוד מהעבודה המדהימה, אין עליך" },
-  { src: "/feedback/2.jpg", alt: "המלצת לקוח: אין מילים, פשוט מושלם, תודה רבה ויישר כוח" },
-  { src: "/feedback/5.jpg", alt: "המלצת לקוח: כבר היית אצלינו, ואין אחד שנכנס לבית ולא מתפעל" },
-  { src: "/feedback/8.jpg", alt: "המלצת לקוח: אנחנו ממש מרוצים ובהלם, התיקון הנכון והראוי לחורבן המקדש" },
-  { src: "/feedback/7.jpg", alt: "המלצת לקוח: השקעתי בכל פינה בבית, אבל היצירה שלך הכי יפה" },
+const BASE_SHOTS = [
+  { src: "/feedback/c6.jpg", alt: "המלצת לקוח: שמענו בעצתך בנוגע להוספת תאורה, הוסיף שלמות לשלמות, תודה רבה" },
+  { src: "/feedback/c1.jpg", alt: "המלצת לקוח: חייבים להגיד לך תודה רבה על העבודה היפה והתוצאה המהממת, אהבנו מאוד" },
+  { src: "/feedback/c5.jpg", alt: "המלצת לקוח: ראינו את היצירה ולא יכולנו להוריד את החיוך מהפנים, השירות הכי גבוה שיש" },
+  { src: "/feedback/c4.jpg", alt: "המלצת לקוח: שלמות אח יקר, אין כמוך, תודה רבה על הכל" },
+  { src: "/feedback/c3.jpg", alt: "המלצת לקוח: תקשיב זה פשוט מטורף, במציאות זה כל כך מדויק ומיוחד, תודה ענקית" },
+  { src: "/feedback/c2.jpg", alt: "המלצת לקוח: אין לי מילים להודות לך, באת עם לב ענק וחיבור אמיתי, תודה על הלב ועל הנשמה" },
 ];
+
+// Embla quietly turns `loop` OFF when the slides can't overfill the viewport
+// (the auto-scroll then hits a wall and snaps back). The 6 shots are tall and
+// narrow (~1.5k px of track), so render the set 3x — enough to loop seamlessly
+// even on very wide screens.
+const SHOTS = [...BASE_SHOTS, ...BASE_SHOTS, ...BASE_SHOTS];
 
 export default function Testimonials() {
   const [open, setOpen] = useState<string | null>(null);
@@ -34,7 +38,7 @@ export default function Testimonials() {
     { loop: true, dragFree: true, align: "start", direction: "rtl", containScroll: false },
     prefersReduced
       ? []
-      : [AutoScroll({ playOnInit: true, speed: 1, stopOnInteraction: false, stopOnMouseEnter: true })]
+      : [AutoScroll({ playOnInit: true, speed: 1, startDelay: 0, stopOnInteraction: false, stopOnMouseEnter: true })]
   );
 
   // Open the lightbox only on a real click, not at the end of a drag — measure the
