@@ -19,8 +19,8 @@ const SELECTOR =
 const SKIP = ".hero__display,.hero__hello,.hero__kicker,.hero__line";
 
 const START_BLUR = 12; // px
-const DURATION = 0.65; // s per word
-const STAGGER = 0.05; // s between words
+const DURATION = 0.4; // s per word
+const STAGGER = 0.025; // s between words
 
 // Recursively wrap each word in a <span class="whisper-word">, keeping element
 // children (<em>, <a>, …) and <br> intact so markup/layout survive.
@@ -111,7 +111,7 @@ export default function WhisperReveal() {
           duration: DURATION,
           ease: "power2.out",
           stagger: STAGGER,
-          scrollTrigger: { trigger: el, start: "top 88%", once: true },
+          scrollTrigger: { trigger: el, start: "top 92%", once: true },
         });
       });
 
