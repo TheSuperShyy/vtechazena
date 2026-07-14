@@ -8,14 +8,16 @@ export const metadata = {
 };
 
 // All workshop photos. 7–9 were converted from the HEIC originals (decoded with
-// heic-convert, re-encoded to JPEG) so the whole set is web-compatible.
+// heic-convert, re-encoded to JPEG) so the whole set is web-compatible. The set
+// was downscaled to a 1400px long edge (originals were up to 24 MP / 5.3 MB —
+// decoding them made the grid lag); 6 became JPEG in the same pass.
 const IMAGES = [
   "/workshop/workshop-1.jpg",
   "/workshop/workshop-2.jpg",
   "/workshop/workshop-3.jpg",
   "/workshop/workshop-4.jpg",
   "/workshop/workshop-5.jpg",
-  "/workshop/workshop-6.png",
+  "/workshop/workshop-6.jpg",
   "/workshop/workshop-7.jpg",
   "/workshop/workshop-8.jpg",
   "/workshop/workshop-9.jpg",
