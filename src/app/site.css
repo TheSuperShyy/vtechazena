@@ -27,10 +27,20 @@
    LTR (bidi-override) so the on-screen order matches the PDF; the real word lives in an
    .sr-only sibling for a11y/SEO. font-family forces Oraita even on sans-styled headings. */
 .swash-word{font-family:var(--vt-display);font-weight:400;direction:ltr;unicode-bidi:bidi-override;white-space:nowrap}
-/* WhisperReveal wraps each word in <span class="whisper-word">. unicode-bidi does NOT
-   inherit, so those inner spans lose the override above and the visual-ordered PUA
-   glyphs get re-shaped RTL into gibberish. Re-assert the override on them. */
+/* Defensive: if a whisper span ever ends up INSIDE a swash-word again, keep the
+   bidi override (unicode-bidi doesn't inherit; without it the visual-ordered PUA
+   glyphs re-shape RTL into gibberish). WhisperReveal no longer splits swash words —
+   splitting them into per-word inline-blocks broke the Oraita glyph run and cut the
+   edge letters' calligraphic tails (client feedback), so the whole .swash-word now
+   animates as ONE whisper unit. The padding/negative-margin pair gives that unit's
+   rasterized paint box room for the flourish ink that sweeps ~2em past the glyphs
+   (same trick as the hero wordmark); margins cancel it for layout. */
 .swash-word .whisper-word{unicode-bidi:bidi-override}
+/* Vertical padding was .75em — too tight for the deep bottom loops (founder דבר
+   המייסד, the verse) which clipped mid-blur; 1.6em matches the flourish depth. The
+   filter/will-change is cleared on animation-complete (WhisperReveal) so post-reveal
+   nothing clips at all — this padding only has to cover the brief blur. */
+.swash-word.whisper-word{padding:1.6em 2.5em;margin:-1.6em -2.5em}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 /* The swashes extend below/above the line box — don't let the headings clip them. */
 .story__title,.story__subtitle,.tier-card__title{overflow:visible}
@@ -739,10 +749,27 @@
   .section__title{font-size:clamp(1.7rem,7vw,2.6rem)}
   .section__lead,.services-lead{font-size:clamp(1rem,4vw,1.15rem)}
 
+  /* --- Keep Oraita swash flourishes inside the phone (client feedback 2026-07-15) ---
+     The calligraphic tails sweep ~0.5em past the glyph box. A flush-right (RTL `start`)
+     heading pins that tail to the right gutter, so it pokes past the viewport where
+     .site{overflow-x:clip} amputates it (the "start/end of the word is cut" report);
+     the verse is also simply wider than a phone screen. Fix: CENTER the story headings
+     so the overhang has symmetric gutter room on both sides, and SHRINK the genuinely
+     too-wide ones (verse, gallery word) so glyphs + flourish clear the edges 320-430px. */
+  /* align-self:center — .story__text is a flex column (align-items:flex-start), so these
+     headings shrink-wrap and pin right; text-align alone can't move a shrink-wrapped box. */
+  .story__title,.story__subtitle,.story__quote{text-align:center;justify-content:center;align-self:center}
+  .story__title{font-size:clamp(1.7rem,7.2vw,2.6rem)}
+  .story__subtitle{font-size:clamp(1.35rem,5.6vw,2rem)}
+  .story__quote{font-size:clamp(.85rem,4.5vw,1.25rem);padding-inline-start:0;border-inline-start:0}
+  .gallery__title{font-size:clamp(1.5rem,7.8vw,2.8rem)}
+
   .intro{padding:var(--vt-sec-y) var(--vt-gutter) clamp(2.2rem,8vw,3rem)}
-  .intro__heading{margin-bottom:clamp(1.8rem,7vw,2.6rem)}
+  /* Center the welcome stack so the Oraita "ותחזינה" flourishes clear both gutters
+     (was flush-right + oversized -> the swash box ran ~114px past the screen). */
+  .intro__heading{margin-bottom:clamp(1.8rem,7vw,2.6rem);align-items:center;text-align:center}
   .intro__sans{font-size:clamp(1.9rem,9vw,3rem)}
-  .intro__script{font-size:clamp(2.4rem,13.5vw,4rem)}
+  .intro__script{font-size:clamp(2.1rem,10.5vw,3.2rem)}
   .stats{grid-template-columns:1fr;gap:clamp(.8rem,3.5vw,1.2rem)}
 
   .carousel{height:58vh;min-height:360px}
