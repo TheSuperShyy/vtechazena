@@ -36,6 +36,30 @@ const ITEMS: Item[] = SERIES.flatMap((s) =>
 );
 const CATEGORIES = ["הכול", ...SERIES.map((s) => s.key)];
 
+// The "הכול" tab is a curated highlight reel, not the full 88 — only the
+// strongest, cleanly-shot pieces (straight-on, well-lit, no room clutter),
+// ordered so the leading five carry the preview. Each tier keeps its full set.
+const BEST_IDS = [
+  "tiers/premium/premium-02.jpg",
+  "tiers/advance/advance-42.jpg",
+  "tiers/base/base-16.jpg",
+  "tiers/premium/premium-11.jpg",
+  "tiers/advance/advance-09.jpg",
+  "tiers/premium/premium-04.jpg",
+  "tiers/base/base-02.jpg",
+  "tiers/advance/advance-01.jpg",
+  "tiers/premium/premium-16.jpg",
+  "tiers/base/base-09.jpg",
+  "tiers/advance/advance-16.jpg",
+  "tiers/premium/premium-08.jpg",
+  "tiers/base/base-04.jpg",
+  "tiers/advance/advance-28.jpg",
+  "tiers/base/base-19.jpg",
+  "tiers/advance/advance-15.jpg",
+];
+const ITEM_BY_ID = new Map(ITEMS.map((it) => [it.id, it]));
+const BEST: Item[] = BEST_IDS.map((id) => ITEM_BY_ID.get(id)).filter((it): it is Item => Boolean(it));
+
 const ZoomIcon = () => (
   <svg className="g-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
     <circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3M11 8v6M8 11h6" />
@@ -64,7 +88,7 @@ export default function Gallery() {
   const [selected, setSelected] = useState<string | null>(null);
   const [popupOpen, setPopupOpen] = useState(false); // "view all" modal gallery
 
-  const filtered = filter === "הכול" ? ITEMS : ITEMS.filter((it) => it.cat === filter);
+  const filtered = filter === "הכול" ? BEST : ITEMS.filter((it) => it.cat === filter);
   const selectedItem = ITEMS.find((it) => it.id === selected) ?? null;
 
   // Grid shows up to MAX_PREVIEW; the blurred "view all" tile takes the next slot.
