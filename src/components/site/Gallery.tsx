@@ -88,22 +88,29 @@ export default function Gallery() {
   const [selected, setSelected] = useState<string | null>(null);
   const [popupOpen, setPopupOpen] = useState(false); // "view all" modal gallery
 
-  const filtered = filter === "הכול" ? BEST : ITEMS.filter((it) => it.cat === filter);
+  const isAll = filter === "הכול";
+  const tierItems = ITEMS.filter((it) => it.cat === filter);
+  // The grid preview leads with the best-of reel on "הכול"; the "view all" popup,
+  // its count, and lightbox navigation span the COMPLETE set (all 88 on "הכול")
+  // so nothing is hidden — only the featured order differs.
+  const previewItems = isAll ? BEST : tierItems;
+  const fullItems = isAll ? ITEMS : tierItems;
   const selectedItem = ITEMS.find((it) => it.id === selected) ?? null;
 
   // Grid shows up to MAX_PREVIEW; the blurred "view all" tile takes the next slot.
-  const preview = filtered.slice(0, MAX_PREVIEW);
-  const hasMore = filtered.length > MAX_PREVIEW;
+  const preview = previewItems.slice(0, MAX_PREVIEW);
+  const hasMore = fullItems.length > MAX_PREVIEW;
+  const viewAllImg = previewItems[MAX_PREVIEW] ?? fullItems[MAX_PREVIEW];
 
   const step = useCallback(
     (dir: number) =>
       setSelected((cur) => {
         if (cur === null) return cur;
-        const idx = filtered.findIndex((it) => it.id === cur);
-        if (idx === -1) return filtered[0]?.id ?? null;
-        return filtered[(idx + dir + filtered.length) % filtered.length].id;
+        const idx = fullItems.findIndex((it) => it.id === cur);
+        if (idx === -1) return fullItems[0]?.id ?? null;
+        return fullItems[(idx + dir + fullItems.length) % fullItems.length].id;
       }),
-    [filtered]
+    [fullItems]
   );
 
   // Lightbox keyboard nav (RTL: Right = previous, Left = next).
@@ -206,13 +213,13 @@ export default function Gallery() {
                     setPopupOpen(true);
                   }
                 }}
-                aria-label={`צפייה בכל ${filtered.length} היצירות`}
+                aria-label={`צפייה בכל ${fullItems.length} היצירות`}
               >
-                <img className="gtile__img gtile__img--blur" src={filtered[MAX_PREVIEW].url} alt="" aria-hidden="true" loading="lazy" decoding="async" />
+                <img className="gtile__img gtile__img--blur" src={viewAllImg.url} alt="" aria-hidden="true" loading="lazy" decoding="async" />
                 <span className="gtile--all__inner" aria-hidden="true">
                   <GridIcon />
                   <span className="gtile--all__label">צפו בכל היצירות</span>
-                  <span className="gtile--all__count">{filtered.length} תמונות</span>
+                  <span className="gtile--all__count">{fullItems.length} תמונות</span>
                 </span>
               </button>
             </motion.div>
@@ -235,14 +242,14 @@ export default function Gallery() {
                 <span className="gcol-modal__eyebrow">גלריה</span>
                 <h3 className="gcol-modal__title">{filter === "הכול" ? "כל היצירות" : `סדרת ${filter}`}</h3>
               </div>
-              <span className="gcol-modal__count">{filtered.length} תמונות</span>
+              <span className="gcol-modal__count">{fullItems.length} תמונות</span>
               <button className="gcol-modal__close" onClick={() => setPopupOpen(false)} aria-label="סגירה">
                 <XIcon />
               </button>
             </div>
             <div className="gcol-modal__scroll">
               <div className="gcol-modal__grid" role="list">
-                {filtered.map((it) => (
+                {fullItems.map((it) => (
                   <div role="listitem" key={it.id}>
                     <Tile it={it} />
                   </div>
