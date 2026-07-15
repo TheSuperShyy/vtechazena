@@ -28,6 +28,20 @@ function whisperize(el: HTMLElement): HTMLElement[] {
   const words: HTMLElement[] = [];
   const walk = (node: Node) => {
     Array.from(node.childNodes).forEach((child) => {
+      if (child.nodeType === Node.ELEMENT_NODE) {
+        const elChild = child as HTMLElement;
+        // Swash headings must NOT be split into per-word inline-blocks: the split
+        // breaks the Oraita glyph run and the edge letters lose their calligraphic
+        // tails (client feedback: flourishes cut at word start/end). Animate the
+        // whole span as ONE whisper unit instead — verified to render identically
+        // to plain text even with the blur filter applied.
+        if (elChild.classList.contains("swash-word")) {
+          elChild.classList.add("whisper-word");
+          words.push(elChild);
+          return;
+        }
+        if (elChild.classList.contains("sr-only")) return; // hidden a11y twin — leave intact
+      }
       if (child.nodeType === Node.TEXT_NODE) {
         const txt = child.textContent ?? "";
         if (!txt.trim()) return;
@@ -99,7 +113,10 @@ export default function WhisperReveal() {
         if (!words.length) return;
 
         if (reduce) {
-          gsap.set(words, { opacity: 1, filter: "blur(0px)" });
+          // filter:none (not blur(0)) + will-change:auto so no composited filter
+          // layer lingers — a leftover filter region clips the swash flourish ink
+          // to the element box in stricter engines (Safari/Firefox). See below.
+          gsap.set(words, { opacity: 1, filter: "none", willChange: "auto" });
           return;
         }
 
@@ -112,6 +129,13 @@ export default function WhisperReveal() {
           ease: "power2.out",
           stagger: STAGGER,
           scrollTrigger: { trigger: el, start: "top 92%", once: true },
+          // Once revealed, drop the filter + will-change entirely. gsap otherwise
+          // leaves filter:blur(0px) on the node, and that dormant filter layer
+          // clips a swash-word's calligraphic tails to its (padded) box wherever a
+          // browser confines the filter region to the border box — the "flourish
+          // cut off" the client sees on desktop even though Chrome renders it full.
+          // Chrome A/B proved removing it is pixel-identical, so this is loss-free.
+          onComplete: () => gsap.set(words, { filter: "none", willChange: "auto" }),
         });
       });
 
