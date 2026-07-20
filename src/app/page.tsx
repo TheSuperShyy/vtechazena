@@ -20,7 +20,6 @@ export default function Home() {
       <Hero />
       <Intro />
       <Story />
-      <Work />
       {/* Wrapper bounds the Showcase's position:sticky range: it pins only while
           this group is on screen, so it unpins when Services ends — without it the
           photo would stay pinned over the whole page (FAQ, contact). */}
@@ -30,6 +29,7 @@ export default function Home() {
       </div>
       <Interlude />
       <Gallery />
+      <Work />
       <Testimonials />
       <Workshop />
       <Faq />
