@@ -13,18 +13,15 @@ import { motion, AnimatePresence } from "framer-motion";
 import { WA } from "./Hero";
 import SwashWord from "./SwashWord";
 import { SWASH } from "./swashGlyphs";
+import photos from "../../data/photos.json";
 
-// Each tier's full photo set (converted from the client's HEIC archives to
-// web-optimized JPGs, named <tier>-01.jpg …). First MAX_PREVIEW show as tiles;
-// the rest live in the "view all" popup. Reorder a tier's array to change which
-// images lead its preview.
-const seq = (prefix: string, n: number) =>
-  Array.from({ length: n }, (_, i) => `${prefix}-${String(i + 1).padStart(2, "0")}.jpg`);
-
+// Each tier's full photo set, in display order, from src/data/photos.json (the
+// photo uploader app adds, moves and removes entries there). First MAX_PREVIEW
+// show as tiles; the rest live in the "view all" popup.
 const SERIES = [
-  { key: "יסוד", price: "1,800–2,500 ₪", dir: "tiers/base", images: seq("base", 19) },
-  { key: "הדר", price: "3,500–6,500 ₪", dir: "tiers/advance", images: seq("advance", 52) },
-  { key: "תפארת", price: "7,000 ₪ ומעלה", dir: "tiers/premium", images: seq("premium", 17) },
+  { key: "יסוד", price: "1,800–2,500 ₪", dir: "tiers/base", images: photos.gallery.base },
+  { key: "הדר", price: "3,500–6,500 ₪", dir: "tiers/advance", images: photos.gallery.advance },
+  { key: "תפארת", price: "7,000 ₪ ומעלה", dir: "tiers/premium", images: photos.gallery.premium },
 ];
 
 // Tiles shown in the grid before the blurred "view all" tile takes the last slot.
